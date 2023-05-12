@@ -20,9 +20,10 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const mapRef = useRef<MapViewRef>(null);
   const scrollViewRef = useRef<ScrollView>(null);
-  const [selectedMarkerIndex, setSelectedMarkerIndex] = useState<number | null>(null);
+  const [selectedMarkerIndex, setSelectedMarkerIndex] = useState<number>(-1);
   const [mapAnimation] = useState(new Animated.Value(0));
   const [shouldAnimateMap, setShouldAnimateMap] = useState(true);
+  
 
 // For Find my location button
   const handleLocate = async () => {
@@ -136,8 +137,11 @@ export default function App() {
   const onMarkerPress = async(index: number) => {
     console.log(index)
 
-    setSelectedMarkerIndex(index);
-    await new Promise(resolve => setTimeout(resolve, 10));
+    // setSelectedMarkerIndex(index);
+    setTimeout(() => {
+      setSelectedMarkerIndex(index);
+    }, 500); // change the delay time as needed
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     // Wait for the scrolling to finish before setting should animate map to true
     setShouldAnimateMap(false);
@@ -152,8 +156,25 @@ export default function App() {
   
   const onMapPress = () => {
     setShouldAnimateMap(false)
-    setSelectedMarkerIndex(null);
+    setSelectedMarkerIndex(-1);
     scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: true });
+  };
+
+  const onRightArrowPress = () => {
+    const markerSize = Markers.length-1
+    if (selectedMarkerIndex === markerSize || selectedMarkerIndex === -1){
+      return
+    }
+    setSelectedMarkerIndex(selectedMarkerIndex+1);
+    scrollViewRef.current?.scrollTo({ x: (selectedMarkerIndex+1) * width, y: 0, animated: true });
+  };
+
+  const onLeftArrowPress = () => {
+    if (selectedMarkerIndex === 0 || selectedMarkerIndex === -1){
+      return
+    }
+    setSelectedMarkerIndex(selectedMarkerIndex-1);
+    scrollViewRef.current?.scrollTo({ x: (selectedMarkerIndex-1) * width, y: 0, animated: true });
   };
 
   useEffect(() => {
@@ -233,12 +254,12 @@ export default function App() {
        
         <Ionicons name="person-circle-outline" size={35} color="#4169E1" style={styles.profile}/>
       </View>
-
+        
       
 
 
       {/* Cards */}
-      {selectedMarkerIndex !== null && 
+      {selectedMarkerIndex >= 0 && 
       <Animated.ScrollView
         horizontal
         ref={scrollViewRef}
@@ -256,7 +277,7 @@ export default function App() {
             listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => {
               const selectedIndex = Math.round(event.nativeEvent.contentOffset.x / width);
               if (shouldAnimateMap && selectedMarkerIndex !== selectedIndex) {
-                console.log("Getting scrolledddddd")
+                console.log(selectedIndex)
                 setSelectedMarkerIndex(selectedIndex);
                 const { coordinate } = Markers[selectedIndex];
                 mapRef.current?.animateCamera({
@@ -289,14 +310,14 @@ export default function App() {
 
       </Animated.ScrollView>
 
-    }
+      }
 
 
   
       
       {/* Zoom, event finder, list event, arrow buttons  */}
       <View style={styles.bottomView} >
-        <FontAwesome name="arrow-left" size={24} color="black" style={styles.flipEvent} onPress={handleLocate}/>
+        <FontAwesome name="arrow-left" size={24} color="black" style={styles.flipEvent} onPress={onLeftArrowPress}/>
         <MaterialIcons name="event" size={40} color="#4169E1" style={styles.listEvent}/>
 
         <TouchableOpacity style={styles.zoomInButton} onPress={handleLocate}>
@@ -304,7 +325,7 @@ export default function App() {
         </TouchableOpacity>
 
         <MaterialCommunityIcons name="bullseye-arrow" size={40} color="#4169E1" style={styles.findEvent}/>
-        <FontAwesome name="arrow-right" size={24} color="black" style={styles.flipEvent} onPress={handleLocate}/>
+        <FontAwesome name="arrow-right" size={24} color="black" style={styles.flipEvent} onPress={onRightArrowPress}/>
       </View>
 
       {isLoading && <ActivityIndicator style={styles.loadingIcon} size="large" color="#4169E1" />}
