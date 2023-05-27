@@ -8,6 +8,8 @@ import { MaterialIcons, FontAwesome, Ionicons, MaterialCommunityIcons, FontAweso
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { Markers } from './mapData';
 import { Dimensions } from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
+
 
 const {width, height} = Dimensions.get('window')
 
@@ -178,8 +180,8 @@ export default function App() {
   };
 
   useEffect(() => {
-
-  });
+    handleLocate()
+  }, []);
 
 
 
@@ -196,7 +198,7 @@ export default function App() {
           longitudeDelta: 0.0421,
         }}
         ref={mapRef}
-        onMapReady={handleLocate}
+        //onMapReady={handleLocate}
         onPress={onMapPress}
       >
 
@@ -255,7 +257,14 @@ export default function App() {
         <Ionicons name="person-circle-outline" size={35} color="#4169E1" style={styles.profile}/>
       </View>
         
-      
+      {/* {selectedMarkerIndex >= 0 && 
+      <View style={{ alignItems: 'center', padding: 10 }}>
+        <QRCode
+          value={`myapp://marker?index=${selectedMarkerIndex}`}
+          size={150}
+        />
+      </View>
+      } */}
 
 
       {/* Cards */}
