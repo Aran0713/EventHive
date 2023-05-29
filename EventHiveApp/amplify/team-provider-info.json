@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-eventhive-dev-185739-authRole",
+      "UnauthRoleArn": "arn:aws:iam::363651527807:role/amplify-eventhive-dev-185739-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::363651527807:role/amplify-eventhive-dev-185739-authRole",
+      "Region": "ca-central-1",
+      "DeploymentBucketName": "amplify-eventhive-dev-185739-deployment",
+      "UnauthRoleName": "amplify-eventhive-dev-185739-unauthRole",
+      "StackName": "amplify-eventhive-dev-185739",
+      "StackId": "arn:aws:cloudformation:ca-central-1:363651527807:stack/amplify-eventhive-dev-185739/0beba160-fdab-11ed-be9d-06436827b484",
+      "AmplifyAppId": "d3h2dwzic209tt"
+    },
+    "categories": {
+      "auth": {
+        "eventhive30354cef": {}
+      }
+    }
+  }
+}

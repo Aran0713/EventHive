@@ -15,7 +15,8 @@
     "@react-native-async-storage/async-storage": "1.17.11",
     "@react-native-community/geolocation": "^3.0.5",
     "@react-native-community/masked-view": "^0.1.11",
-    "@react-native-community/netinfo": "9.3.7",
+    "@react-native-community/netinfo": "^9.3.7",
+    "@react-native-picker/picker": "2.4.8",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
     "@types/react-router": "^5.1.20",
@@ -44,6 +45,10 @@
     "react-router-native": "^6.11.2"
   },
   "devDependencies": {
+    "@aws-amplify/analytics": "^6.1.1",
+    "@aws-amplify/auth": "^5.3.7",
+    "@aws-amplify/core": "^5.3.1",
+    "@aws-amplify/storage": "^5.3.1",
     "@babel/core": "^7.20.0",
     "@types/expo__vector-icons": "^10.0.0",
     "@types/react": "~18.0.14",

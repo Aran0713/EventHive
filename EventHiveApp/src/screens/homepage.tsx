@@ -177,7 +177,7 @@ const Homepage = () => {
 
 
     return (
-        <View style={styles.container}>
+      <View style={styles.container}>
         
         <MapView
             provider={PROVIDER_GOOGLE}
@@ -294,10 +294,10 @@ const Homepage = () => {
             {Markers.map((Marker, index) =>
             <View style={styles.eventCard} key={index}>
                 <View style={styles.eventTextContent}>
-                <Text numberOfLines={1} >{Marker.privacy} Event</Text>
+                <Text numberOfLines={1} style={styles.eventPrivacy}>{Marker.privacy} Event</Text>
                 <Text numberOfLines={1} style={styles.eventTitle}>{Marker.title}</Text>
                 
-                <Text numberOfLines={1} >{Marker.date}, {Marker.time}</Text>
+                <Text numberOfLines={1} style={styles.eventDate}>{Marker.date}, {Marker.time}</Text>
                 <Text numberOfLines={1} style={styles.eventSmallDescription}>{Marker.smallDescription}</Text>
                 </View>
             </View>
@@ -314,7 +314,7 @@ const Homepage = () => {
         <View style={styles.bottomView} >
             <FontAwesome name="arrow-left" size={24} color="black" style={styles.flipEvent} onPress={onLeftArrowPress}/>
             <Link to="/listevent">
-                <MaterialIcons name="event" size={40} color="#4169E1" style={styles.listEvent}/>
+                <MaterialIcons name="event" size={40} color="#265999" style={styles.listEvent}/>
             </Link>
             
 
@@ -322,7 +322,7 @@ const Homepage = () => {
             <Ionicons name="ios-locate-outline" size={30} color="black" />
             </TouchableOpacity>
 
-            <MaterialCommunityIcons name="bullseye-arrow" size={40} color="#4169E1" style={styles.findEvent}/>
+            <MaterialCommunityIcons name="bullseye-arrow" size={40} color="#265999" style={styles.findEvent}/>
             <FontAwesome name="arrow-right" size={24} color="black" style={styles.flipEvent} onPress={onRightArrowPress}/>
         </View>
 
@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#fff',
-      paddingTop: Platform.OS === "android" ? 10 : 10, //30, 40
+      paddingTop: Platform.OS === "android" ? 25 : 40, //30, 40
     },
     map: {
       ...StyleSheet.absoluteFillObject,
@@ -391,7 +391,7 @@ const styles = StyleSheet.create({
       // width:300
     },
     zoomInButton: {
-      backgroundColor: '#4169E1',
+      backgroundColor: '#265999',
       padding: 5,
       borderRadius: 10,
       marginHorizontal: 10
@@ -441,7 +441,7 @@ const styles = StyleSheet.create({
       width:width,
       overflow:"hidden",
       borderWidth:2,
-      borderColor:"#E5E4E2"
+      borderColor:"#E5E4E2",
       
     },
     eventTextContent:{
@@ -451,16 +451,31 @@ const styles = StyleSheet.create({
       paddingVertical:20,
       alignContent:'flex-start',
       justifyContent:'flex-start',
-      backgroundColor:"#F5F5F5",
-      // Blue Gray Hex #98AFC7 #6082B6 #DBE2E9
+      backgroundColor:"#265999",
+
+      // Blue Gray Hex #98AFC7 #6082B6 #DBE2E9 #4169E1
     },
     eventTitle:{
       alignSelf:'center',
-      padding:10
+      padding:10,
+      color:"white",
+      fontSize:20,
+      fontWeight:"bold",
     },
     eventSmallDescription:{
       paddingVertical:10,
-      alignSelf:'center'
+      alignSelf:'center',
+      color:"white",
+      fontSize:16,
+      fontWeight:"bold",
+    },
+    eventPrivacy:{
+      color:"white",
+    },
+    eventDate:{
+      fontSize:14,
+      fontWeight:"bold",
+      color:"#d8bcab",
     }
 });
   

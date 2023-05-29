@@ -4,6 +4,17 @@ import React from 'react';
 import { Platform, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import {NativeRouter, Route, Routes, Link} from 'react-router-native';
 
+import Amplify from '@aws-amplify/core';
+import awsconfig from './src/aws-exports';
+import { withAuthenticator } from 'aws-amplify-react-native'
+
+Amplify.configure({
+  ...awsconfig,
+  Analytics: {
+    disabled: true,
+  },
+});
+
 
 
 function App(){
@@ -32,4 +43,4 @@ function App(){
 });
 
 
-export default App;
+export default withAuthenticator(App);

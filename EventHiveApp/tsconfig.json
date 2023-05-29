@@ -6,5 +6,9 @@
     "noImplicitAny": true,
     "strictNullChecks": true
   },
-  "extends": "expo/tsconfig.base"
+  "extends": "expo/tsconfig.base",
+  "include": [
+    "src",
+    "path/to/aws-amplify-react-native.d.ts"
+  ]
 }
