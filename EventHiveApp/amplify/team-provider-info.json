@@ -14,6 +14,9 @@
     "categories": {
       "auth": {
         "eventhive30354cef": {}
+      },
+      "api": {
+        "eventhive": {}
       }
     }
   }

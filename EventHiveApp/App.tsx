@@ -1,5 +1,7 @@
 import Homepage from './src/screens/homepage';
 import ListEvent from './src/screens/listEvent';
+import Profile from './src/screens/profile';
+import Settings from './src/screens/settings';
 import React from 'react';
 import { Platform, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import {NativeRouter, Route, Routes, Link} from 'react-router-native';
@@ -27,6 +29,8 @@ function App(){
             <Routes>
               <Route path="/" element={<Homepage/>} />
               <Route path= "/listevent" element={<ListEvent/>} />
+              <Route path= "/profile" element={<Profile/>} />
+              <Route path= "/settings" element={<Settings/>} />
             </Routes>
     
         </View>
@@ -37,7 +41,7 @@ function App(){
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'white',
+      backgroundColor: 'transparent',
       paddingTop: Platform.OS === "android" ? 0 : 0,
     },
 });

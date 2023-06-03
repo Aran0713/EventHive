@@ -1,0 +1,117 @@
+type Event @model @auth(
+  rules: [
+    { allow: owner },
+    { allow: private, operations: [read] }
+  ]
+) {
+  id: ID!
+  organization: String!
+  userName: String!
+  userId: String
+  eventName: String!
+  eventPrivacy: String!
+  eventID: ID!
+  eventType: String
+  dateTime: [DateTime] @hasMany 
+  location: [Location] @hasMany
+  description: [Description] @hasMany
+  contact: [Contact] @hasMany
+  ageLimit: Int
+  specialAccommodation: [SpecialAccommodation] @hasMany
+  ticketInfo: String
+  image1: String
+  image2: String
+  image3: String
+}
+
+
+
+type DateTime @model @auth(
+  rules: [
+    { allow: owner },
+    { allow: private, operations: [read] }
+  ]
+){
+  date: AWSDate!
+  startTime: String
+  endTime: String
+  event: Event @belongsTo
+}
+
+
+type Location @model @auth(
+  rules: [
+    { allow: owner },
+    { allow: private, operations: [read] }
+  ]
+){
+  country: String
+  province: String
+  city: String
+  postalCode: String
+  address: String
+  coordinates: [Coordinates] @hasMany
+  event: Event @belongsTo
+}
+
+
+type Coordinates @model @auth(
+  rules: [
+    { allow: owner },
+    { allow: private, operations: [read] }
+  ]
+){
+  longitude: String!
+  latitude: String!
+  location: Location @belongsTo
+}
+
+
+type Description @model @auth(
+  rules: [
+    { allow: owner },
+    { allow: private, operations: [read] }
+  ]
+){
+  smallDescription: String
+  aboutEvent: String
+  schedule: String
+  event: Event @belongsTo
+}
+
+
+type Contact @model @auth(
+  rules: [
+    { allow: owner },
+    { allow: private, operations: [read] }
+  ]
+){
+  phone: String
+  email: String
+  website: String
+  ig: String
+  twitter: String
+  snapchat: String
+  tiktok: String
+  youtube: String
+  event: Event @belongsTo
+}
+
+
+type SpecialAccommodation @model @auth(
+  rules: [
+    { allow: owner },
+    { allow: private, operations: [read] }
+  ]
+){
+  wheelchairAccessibility: String
+  signLanguageInterpretation: String
+  closedCaptioning: String
+  assistiveListeningSystems: String
+  brailleMaterials: String
+  flexibleCommunicationOptions: String
+  accessibleSeating: String
+  serviceAnimalAccommodation: String
+  sensoryAccommodations: String
+  event: Event @belongsTo
+}
