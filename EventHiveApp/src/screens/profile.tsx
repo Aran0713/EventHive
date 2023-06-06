@@ -1,32 +1,47 @@
 import React from 'react';
-import {Button, SafeAreaView, StatusBar, Text, View, StyleSheet, Platform} from 'react-native';
-import {Link} from 'react-router-native';
-import { Ionicons } from '@expo/vector-icons'; 
+import {Button, SafeAreaView, StatusBar, Text, View, StyleSheet, Platform, TouchableOpacity} from 'react-native';
+import {Link, Navigate} from 'react-router-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const Profile = () => {
-  return (
-    <View style={styles.container}>
-        <View style={styles.topView}>
-            <Link to="/">
-                <Ionicons name="md-caret-back-circle-sharp" size={24} color="black" style={styles.backButtonIcon}/>
-            </Link>
-            <Link to="/settings">
-                <Ionicons name="settings" size={24} color="black" style={styles.backButtonIcon}/>
-            </Link>
-        </View>
 
-        <View style={styles.middleView}>
-            <Text>Profile Picture</Text>
-            <Text>Friends</Text>
-            <Text>Hosted</Text>
-            <Text>Supported</Text>
+    const navigate = useNavigate();
+    const backArrowPress =async () => {
+        navigate('/');
+    }
+    const settingButtonPress =async () => {
+        navigate('/settings');
+    }
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.topView}>
+    
+                <TouchableOpacity onPress={backArrowPress}>
+                    <Ionicons name="md-caret-back-circle-sharp" size={24} color="black" style={styles.backButtonIcon}/>
+                </TouchableOpacity>
+
+
+                <TouchableOpacity onPress={settingButtonPress}>
+                    <Ionicons name="settings" size={24} color="black" style={styles.backButtonIcon}/>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.middleView}>
+                <Text>Profile Picture</Text>
+                <Text>Friends</Text>
+                <Text>Hosted</Text>
+                <Text>Supported</Text>
+            </View>
+            
+            <View style={styles.bottomView}>
+                <Text>List Event</Text>
+            </View>
         </View>
-        
-        <View style={styles.bottomView}>
-            <Text>List Event</Text>
-        </View>
-    </View>
-  );
+    );
 };
 
 const styles = StyleSheet.create({

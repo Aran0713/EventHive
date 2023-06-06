@@ -317,10 +317,15 @@ const Homepage = () => {
                     },
                 }}
                 />
-            <FontAwesome name="filter" size={30} color="#e2b13c" style={styles.filter} />
 
-              <Ionicons name="person-circle-outline" size={35} color="#4169E1" style={styles.profile} onPress={() => onProfilePress()}/>
-        
+            <TouchableOpacity style={styles.filter}>
+              <FontAwesome name="filter" size={30} color="#e2b13c" />
+            </TouchableOpacity>
+            
+            <TouchableOpacity onPress={() => onProfilePress()}>
+              <Ionicons name="person-circle-outline" size={35} color="#4169E1" style={styles.profile}/>
+            </TouchableOpacity>
+
         </View>
             
         {/* {selectedMarkerIndex >= 0 && 
@@ -391,22 +396,25 @@ const Homepage = () => {
         
         {/* Zoom, event finder, list event, arrow buttons  */}
         <View style={styles.bottomView}>
-            <FontAwesome name="arrow-left" size={24} color="black" style={styles.flipEvent} onPress={onLeftArrowPress}/>
+            <TouchableOpacity onPress={onLeftArrowPress}>
+              <FontAwesome name="arrow-left" size={24} color="black" style={styles.flipEvent}/>
+            </TouchableOpacity>
 
-            <View style={styles.listEvent}>
-                <MaterialIcons name="event" size={40} color="#265999" style={styles.listEvent} onPress={onListEventPress}/>
-            </View>
+            <TouchableOpacity style={styles.listEvent} onPress={onListEventPress}>
+                <MaterialIcons name="event" size={40} color="#265999" style={styles.listEvent}/>
+            </TouchableOpacity>
 
-              
-            
-          
-            
             <TouchableOpacity style={styles.zoomInButton} onPress={handleLocate}>
               <Ionicons name="ios-locate-outline" size={30} color="black" />
             </TouchableOpacity>
 
-            <MaterialCommunityIcons name="bullseye-arrow" size={40} color="#265999" style={styles.findEvent}/>
-            <FontAwesome name="arrow-right" size={24} color="black" style={styles.flipEvent} onPress={onRightArrowPress}/>
+            <TouchableOpacity>
+              <MaterialCommunityIcons name="bullseye-arrow" size={40} color="#265999" style={styles.findEvent}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={onRightArrowPress}>
+              <FontAwesome name="arrow-right" size={24} color="black" style={styles.flipEvent}/>
+            </TouchableOpacity>
         </View>
 
         {isLoading && <ActivityIndicator style={styles.loadingIcon} size="large" color="#4169E1" />}

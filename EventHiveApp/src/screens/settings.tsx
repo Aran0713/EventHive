@@ -1,31 +1,39 @@
 import React from 'react';
-import {Button, SafeAreaView, StatusBar, Text, View, StyleSheet, Platform} from 'react-native';
+import {Button, SafeAreaView, StatusBar, Text, View, StyleSheet, Platform, TouchableOpacity} from 'react-native';
 import {Link} from 'react-router-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import {Auth} from 'aws-amplify';
 import { Entypo } from '@expo/vector-icons'; 
+import { useNavigate } from 'react-router-dom';
 
 const Settings = () => {
-  return (
-    <View style={styles.container}>
-        <View style={styles.topView}>
-            <Link to="/profile">
-                <Ionicons name="md-caret-back-circle-sharp" size={24} color="black" style={styles.backButtonIcon}/>
-            </Link>
-        </View>
-        
-        <View style={styles.settingsText}>
-            <Text>Settings</Text>
-        </View>
+    const navigate = useNavigate();
+    const backArrowPress =async () => {
+        navigate('/');
+    }
 
-        <View style={styles.logOut}>
-            <Text style={styles.logOutText}>Log out</Text>
-            <Entypo name="log-out" size={24} color="black" style={styles.logOutButton} onPress={() => {
-                Auth.signOut();
-            }}/>
+    return (
+        <View style={styles.container}>
+            <View style={styles.topView}>
+                <Link to="/profile">
+                <TouchableOpacity onPress={backArrowPress}>
+                    <Ionicons name="md-caret-back-circle-sharp" size={24} color="black" style={styles.backButtonIcon}/>
+                </TouchableOpacity>
+                </Link>
+            </View>
+            
+            <View style={styles.settingsText}>
+                <Text>Settings</Text>
+            </View>
+
+            <View style={styles.logOut}>
+                <Text style={styles.logOutText}>Log out</Text>
+                <Entypo name="log-out" size={24} color="black" style={styles.logOutButton} onPress={() => {
+                    Auth.signOut();
+                }}/>
+            </View>
         </View>
-    </View>
-  );
+    );
 };
 
 const styles = StyleSheet.create({
