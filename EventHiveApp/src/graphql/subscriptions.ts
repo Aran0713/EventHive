@@ -14,8 +14,10 @@ export const onCreateEvent = /* GraphQL */ `
       userId
       eventName
       eventPrivacy
-      eventID
       eventType
+      smallDescription
+      ageLimit
+      ticketInfo
       dateTime {
         items {
           date
@@ -46,7 +48,6 @@ export const onCreateEvent = /* GraphQL */ `
       }
       description {
         items {
-          smallDescription
           aboutEvent
           schedule
           id
@@ -75,7 +76,6 @@ export const onCreateEvent = /* GraphQL */ `
         }
         nextToken
       }
-      ageLimit
       specialAccommodation {
         items {
           wheelchairAccessibility
@@ -95,7 +95,6 @@ export const onCreateEvent = /* GraphQL */ `
         }
         nextToken
       }
-      ticketInfo
       image1
       image2
       image3
@@ -117,8 +116,10 @@ export const onUpdateEvent = /* GraphQL */ `
       userId
       eventName
       eventPrivacy
-      eventID
       eventType
+      smallDescription
+      ageLimit
+      ticketInfo
       dateTime {
         items {
           date
@@ -149,7 +150,6 @@ export const onUpdateEvent = /* GraphQL */ `
       }
       description {
         items {
-          smallDescription
           aboutEvent
           schedule
           id
@@ -178,7 +178,6 @@ export const onUpdateEvent = /* GraphQL */ `
         }
         nextToken
       }
-      ageLimit
       specialAccommodation {
         items {
           wheelchairAccessibility
@@ -198,7 +197,6 @@ export const onUpdateEvent = /* GraphQL */ `
         }
         nextToken
       }
-      ticketInfo
       image1
       image2
       image3
@@ -220,8 +218,10 @@ export const onDeleteEvent = /* GraphQL */ `
       userId
       eventName
       eventPrivacy
-      eventID
       eventType
+      smallDescription
+      ageLimit
+      ticketInfo
       dateTime {
         items {
           date
@@ -252,7 +252,6 @@ export const onDeleteEvent = /* GraphQL */ `
       }
       description {
         items {
-          smallDescription
           aboutEvent
           schedule
           id
@@ -281,7 +280,6 @@ export const onDeleteEvent = /* GraphQL */ `
         }
         nextToken
       }
-      ageLimit
       specialAccommodation {
         items {
           wheelchairAccessibility
@@ -301,7 +299,6 @@ export const onDeleteEvent = /* GraphQL */ `
         }
         nextToken
       }
-      ticketInfo
       image1
       image2
       image3
@@ -327,8 +324,10 @@ export const onCreateDateTime = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -341,11 +340,9 @@ export const onCreateDateTime = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -377,8 +374,10 @@ export const onUpdateDateTime = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -391,11 +390,9 @@ export const onUpdateDateTime = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -427,8 +424,10 @@ export const onDeleteDateTime = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -441,11 +440,9 @@ export const onDeleteDateTime = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -491,8 +488,10 @@ export const onCreateLocation = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -505,11 +504,9 @@ export const onCreateLocation = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -555,8 +552,10 @@ export const onUpdateLocation = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -569,11 +568,9 @@ export const onUpdateLocation = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -619,8 +616,10 @@ export const onDeleteLocation = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -633,11 +632,9 @@ export const onDeleteLocation = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -677,8 +674,8 @@ export const onCreateCoordinates = /* GraphQL */ `
           userId
           eventName
           eventPrivacy
-          eventID
           eventType
+          smallDescription
           ageLimit
           ticketInfo
           image1
@@ -726,8 +723,8 @@ export const onUpdateCoordinates = /* GraphQL */ `
           userId
           eventName
           eventPrivacy
-          eventID
           eventType
+          smallDescription
           ageLimit
           ticketInfo
           image1
@@ -775,8 +772,8 @@ export const onDeleteCoordinates = /* GraphQL */ `
           userId
           eventName
           eventPrivacy
-          eventID
           eventType
+          smallDescription
           ageLimit
           ticketInfo
           image1
@@ -806,7 +803,6 @@ export const onCreateDescription = /* GraphQL */ `
     $owner: String
   ) {
     onCreateDescription(filter: $filter, owner: $owner) {
-      smallDescription
       aboutEvent
       schedule
       event {
@@ -816,8 +812,10 @@ export const onCreateDescription = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -830,11 +828,9 @@ export const onCreateDescription = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -856,7 +852,6 @@ export const onUpdateDescription = /* GraphQL */ `
     $owner: String
   ) {
     onUpdateDescription(filter: $filter, owner: $owner) {
-      smallDescription
       aboutEvent
       schedule
       event {
@@ -866,8 +861,10 @@ export const onUpdateDescription = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -880,11 +877,9 @@ export const onUpdateDescription = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -906,7 +901,6 @@ export const onDeleteDescription = /* GraphQL */ `
     $owner: String
   ) {
     onDeleteDescription(filter: $filter, owner: $owner) {
-      smallDescription
       aboutEvent
       schedule
       event {
@@ -916,8 +910,10 @@ export const onDeleteDescription = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -930,11 +926,9 @@ export const onDeleteDescription = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -971,8 +965,10 @@ export const onCreateContact = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -985,11 +981,9 @@ export const onCreateContact = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -1026,8 +1020,10 @@ export const onUpdateContact = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -1040,11 +1036,9 @@ export const onUpdateContact = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -1081,8 +1075,10 @@ export const onDeleteContact = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -1095,11 +1091,9 @@ export const onDeleteContact = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -1137,8 +1131,10 @@ export const onCreateSpecialAccommodation = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -1151,11 +1147,9 @@ export const onCreateSpecialAccommodation = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -1193,8 +1187,10 @@ export const onUpdateSpecialAccommodation = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -1207,11 +1203,9 @@ export const onUpdateSpecialAccommodation = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -1249,8 +1243,10 @@ export const onDeleteSpecialAccommodation = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -1263,11 +1259,9 @@ export const onDeleteSpecialAccommodation = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3

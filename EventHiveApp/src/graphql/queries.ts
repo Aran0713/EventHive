@@ -11,8 +11,10 @@ export const getEvent = /* GraphQL */ `
       userId
       eventName
       eventPrivacy
-      eventID
       eventType
+      smallDescription
+      ageLimit
+      ticketInfo
       dateTime {
         items {
           date
@@ -43,7 +45,6 @@ export const getEvent = /* GraphQL */ `
       }
       description {
         items {
-          smallDescription
           aboutEvent
           schedule
           id
@@ -72,7 +73,6 @@ export const getEvent = /* GraphQL */ `
         }
         nextToken
       }
-      ageLimit
       specialAccommodation {
         items {
           wheelchairAccessibility
@@ -92,7 +92,6 @@ export const getEvent = /* GraphQL */ `
         }
         nextToken
       }
-      ticketInfo
       image1
       image2
       image3
@@ -116,8 +115,10 @@ export const listEvents = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -130,11 +131,9 @@ export const listEvents = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -159,8 +158,10 @@ export const getDateTime = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -173,11 +174,9 @@ export const getDateTime = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -211,8 +210,8 @@ export const listDateTimes = /* GraphQL */ `
           userId
           eventName
           eventPrivacy
-          eventID
           eventType
+          smallDescription
           ageLimit
           ticketInfo
           image1
@@ -259,8 +258,10 @@ export const getLocation = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -273,11 +274,9 @@ export const getLocation = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -316,8 +315,8 @@ export const listLocations = /* GraphQL */ `
           userId
           eventName
           eventPrivacy
-          eventID
           eventType
+          smallDescription
           ageLimit
           ticketInfo
           image1
@@ -358,8 +357,8 @@ export const getCoordinates = /* GraphQL */ `
           userId
           eventName
           eventPrivacy
-          eventID
           eventType
+          smallDescription
           ageLimit
           ticketInfo
           image1
@@ -418,7 +417,6 @@ export const listCoordinates = /* GraphQL */ `
 export const getDescription = /* GraphQL */ `
   query GetDescription($id: ID!) {
     getDescription(id: $id) {
-      smallDescription
       aboutEvent
       schedule
       event {
@@ -428,8 +426,10 @@ export const getDescription = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -442,11 +442,9 @@ export const getDescription = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -470,7 +468,6 @@ export const listDescriptions = /* GraphQL */ `
   ) {
     listDescriptions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        smallDescription
         aboutEvent
         schedule
         event {
@@ -480,8 +477,8 @@ export const listDescriptions = /* GraphQL */ `
           userId
           eventName
           eventPrivacy
-          eventID
           eventType
+          smallDescription
           ageLimit
           ticketInfo
           image1
@@ -519,8 +516,10 @@ export const getContact = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -533,11 +532,9 @@ export const getContact = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -576,8 +573,8 @@ export const listContacts = /* GraphQL */ `
           userId
           eventName
           eventPrivacy
-          eventID
           eventType
+          smallDescription
           ageLimit
           ticketInfo
           image1
@@ -616,8 +613,10 @@ export const getSpecialAccommodation = /* GraphQL */ `
         userId
         eventName
         eventPrivacy
-        eventID
         eventType
+        smallDescription
+        ageLimit
+        ticketInfo
         dateTime {
           nextToken
         }
@@ -630,11 +629,9 @@ export const getSpecialAccommodation = /* GraphQL */ `
         contact {
           nextToken
         }
-        ageLimit
         specialAccommodation {
           nextToken
         }
-        ticketInfo
         image1
         image2
         image3
@@ -678,8 +675,8 @@ export const listSpecialAccommodations = /* GraphQL */ `
           userId
           eventName
           eventPrivacy
-          eventID
           eventType
+          smallDescription
           ageLimit
           ticketInfo
           image1

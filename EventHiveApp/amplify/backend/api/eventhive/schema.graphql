@@ -1,32 +1,38 @@
-type Event @model @auth(rules: [{allow: owner}, {allow: private, operations: [read]}]) {
+type Event
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
   id: ID!
   organization: String!
   userName: String!
   userId: String
   eventName: String!
   eventPrivacy: String!
-  eventID: ID!
   eventType: String
+  smallDescription: String
   ageLimit: Int
+  ticketInfo: String
   dateTime: [DateTime] @hasMany
   location: [Location] @hasMany
   description: [Description] @hasMany
   contact: [Contact] @hasMany
   specialAccommodation: [SpecialAccommodation] @hasMany
-  ticketInfo: String
   image1: String
   image2: String
   image3: String
 }
 
-type DateTime @model @auth(rules: [{allow: owner}, {allow: private, operations: [read]}]) {
+type DateTime
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
   date: AWSDate!
   startTime: String
   endTime: String
   event: Event @belongsTo
 }
 
-type Location @model @auth(rules: [{allow: owner}, {allow: private, operations: [read]}]) {
+type Location
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
   country: String
   province: String
   city: String
@@ -36,20 +42,25 @@ type Location @model @auth(rules: [{allow: owner}, {allow: private, operations: 
   event: Event @belongsTo
 }
 
-type Coordinates @model @auth(rules: [{allow: owner}, {allow: private, operations: [read]}]) {
+type Coordinates
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
   longitude: String!
   latitude: String!
   location: Location @belongsTo
 }
 
-type Description @model @auth(rules: [{allow: owner}, {allow: private, operations: [read]}]) {
-  smallDescription: String
+type Description
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
   aboutEvent: String
   schedule: String
   event: Event @belongsTo
 }
 
-type Contact @model @auth(rules: [{allow: owner}, {allow: private, operations: [read]}]) {
+type Contact
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
   phone: String
   email: String
   website: String
@@ -61,7 +72,9 @@ type Contact @model @auth(rules: [{allow: owner}, {allow: private, operations: [
   event: Event @belongsTo
 }
 
-type SpecialAccommodation @model @auth(rules: [{allow: owner}, {allow: private, operations: [read]}]) {
+type SpecialAccommodation
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
   wheelchairAccessibility: String
   signLanguageInterpretation: String
   closedCaptioning: String
@@ -72,4 +85,4 @@ type SpecialAccommodation @model @auth(rules: [{allow: owner}, {allow: private, 
   serviceAnimalAccommodation: String
   sensoryAccommodations: String
   event: Event @belongsTo
-} 
+}
