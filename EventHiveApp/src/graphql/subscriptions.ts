@@ -5,9 +5,9 @@
 export const onCreateEvent = /* GraphQL */ `
   subscription OnCreateEvent(
     $filter: ModelSubscriptionEventFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onCreateEvent(filter: $filter, owner: $owner) {
+    onCreateEvent(filter: $filter, userName: $userName) {
       id
       organization
       userName
@@ -20,46 +20,49 @@ export const onCreateEvent = /* GraphQL */ `
       ticketInfo
       dateTime {
         items {
+          id
           date
           startTime
           endTime
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDateTimeId
-          owner
         }
         nextToken
       }
       location {
         items {
+          id
           country
           province
           city
           postalCode
           address
-          id
+          longitude
+          latitude
+          userName
+          eventID
           createdAt
           updatedAt
-          eventLocationId
-          owner
         }
         nextToken
       }
       description {
         items {
+          id
           aboutEvent
           schedule
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDescriptionId
-          owner
         }
         nextToken
       }
       contact {
         items {
+          id
           phone
           email
           website
@@ -68,16 +71,16 @@ export const onCreateEvent = /* GraphQL */ `
           snapchat
           tiktok
           youtube
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventContactId
-          owner
         }
         nextToken
       }
       specialAccommodation {
         items {
+          id
           wheelchairAccessibility
           signLanguageInterpretation
           closedCaptioning
@@ -87,11 +90,10 @@ export const onCreateEvent = /* GraphQL */ `
           accessibleSeating
           serviceAnimalAccommodation
           sensoryAccommodations
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventSpecialAccommodationId
-          owner
         }
         nextToken
       }
@@ -100,16 +102,15 @@ export const onCreateEvent = /* GraphQL */ `
       image3
       createdAt
       updatedAt
-      owner
     }
   }
 `;
 export const onUpdateEvent = /* GraphQL */ `
   subscription OnUpdateEvent(
     $filter: ModelSubscriptionEventFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onUpdateEvent(filter: $filter, owner: $owner) {
+    onUpdateEvent(filter: $filter, userName: $userName) {
       id
       organization
       userName
@@ -122,46 +123,49 @@ export const onUpdateEvent = /* GraphQL */ `
       ticketInfo
       dateTime {
         items {
+          id
           date
           startTime
           endTime
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDateTimeId
-          owner
         }
         nextToken
       }
       location {
         items {
+          id
           country
           province
           city
           postalCode
           address
-          id
+          longitude
+          latitude
+          userName
+          eventID
           createdAt
           updatedAt
-          eventLocationId
-          owner
         }
         nextToken
       }
       description {
         items {
+          id
           aboutEvent
           schedule
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDescriptionId
-          owner
         }
         nextToken
       }
       contact {
         items {
+          id
           phone
           email
           website
@@ -170,16 +174,16 @@ export const onUpdateEvent = /* GraphQL */ `
           snapchat
           tiktok
           youtube
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventContactId
-          owner
         }
         nextToken
       }
       specialAccommodation {
         items {
+          id
           wheelchairAccessibility
           signLanguageInterpretation
           closedCaptioning
@@ -189,11 +193,10 @@ export const onUpdateEvent = /* GraphQL */ `
           accessibleSeating
           serviceAnimalAccommodation
           sensoryAccommodations
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventSpecialAccommodationId
-          owner
         }
         nextToken
       }
@@ -202,16 +205,15 @@ export const onUpdateEvent = /* GraphQL */ `
       image3
       createdAt
       updatedAt
-      owner
     }
   }
 `;
 export const onDeleteEvent = /* GraphQL */ `
   subscription OnDeleteEvent(
     $filter: ModelSubscriptionEventFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onDeleteEvent(filter: $filter, owner: $owner) {
+    onDeleteEvent(filter: $filter, userName: $userName) {
       id
       organization
       userName
@@ -224,46 +226,49 @@ export const onDeleteEvent = /* GraphQL */ `
       ticketInfo
       dateTime {
         items {
+          id
           date
           startTime
           endTime
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDateTimeId
-          owner
         }
         nextToken
       }
       location {
         items {
+          id
           country
           province
           city
           postalCode
           address
-          id
+          longitude
+          latitude
+          userName
+          eventID
           createdAt
           updatedAt
-          eventLocationId
-          owner
         }
         nextToken
       }
       description {
         items {
+          id
           aboutEvent
           schedule
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDescriptionId
-          owner
         }
         nextToken
       }
       contact {
         items {
+          id
           phone
           email
           website
@@ -272,16 +277,16 @@ export const onDeleteEvent = /* GraphQL */ `
           snapchat
           tiktok
           youtube
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventContactId
-          owner
         }
         nextToken
       }
       specialAccommodation {
         items {
+          id
           wheelchairAccessibility
           signLanguageInterpretation
           closedCaptioning
@@ -291,11 +296,10 @@ export const onDeleteEvent = /* GraphQL */ `
           accessibleSeating
           serviceAnimalAccommodation
           sensoryAccommodations
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventSpecialAccommodationId
-          owner
         }
         nextToken
       }
@@ -304,19 +308,21 @@ export const onDeleteEvent = /* GraphQL */ `
       image3
       createdAt
       updatedAt
-      owner
     }
   }
 `;
 export const onCreateDateTime = /* GraphQL */ `
   subscription OnCreateDateTime(
     $filter: ModelSubscriptionDateTimeFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onCreateDateTime(filter: $filter, owner: $owner) {
+    onCreateDateTime(filter: $filter, userName: $userName) {
+      id
       date
       startTime
       endTime
+      userName
+      eventID
       event {
         id
         organization
@@ -348,25 +354,24 @@ export const onCreateDateTime = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDateTimeId
-      owner
     }
   }
 `;
 export const onUpdateDateTime = /* GraphQL */ `
   subscription OnUpdateDateTime(
     $filter: ModelSubscriptionDateTimeFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onUpdateDateTime(filter: $filter, owner: $owner) {
+    onUpdateDateTime(filter: $filter, userName: $userName) {
+      id
       date
       startTime
       endTime
+      userName
+      eventID
       event {
         id
         organization
@@ -398,25 +403,24 @@ export const onUpdateDateTime = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDateTimeId
-      owner
     }
   }
 `;
 export const onDeleteDateTime = /* GraphQL */ `
   subscription OnDeleteDateTime(
     $filter: ModelSubscriptionDateTimeFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onDeleteDateTime(filter: $filter, owner: $owner) {
+    onDeleteDateTime(filter: $filter, userName: $userName) {
+      id
       date
       startTime
       endTime
+      userName
+      eventID
       event {
         id
         organization
@@ -448,39 +452,28 @@ export const onDeleteDateTime = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDateTimeId
-      owner
     }
   }
 `;
 export const onCreateLocation = /* GraphQL */ `
   subscription OnCreateLocation(
     $filter: ModelSubscriptionLocationFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onCreateLocation(filter: $filter, owner: $owner) {
+    onCreateLocation(filter: $filter, userName: $userName) {
+      id
       country
       province
       city
       postalCode
       address
-      coordinates {
-        items {
-          longitude
-          latitude
-          id
-          createdAt
-          updatedAt
-          locationCoordinatesId
-          owner
-        }
-        nextToken
-      }
+      longitude
+      latitude
+      userName
+      eventID
       event {
         id
         organization
@@ -512,39 +505,28 @@ export const onCreateLocation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventLocationId
-      owner
     }
   }
 `;
 export const onUpdateLocation = /* GraphQL */ `
   subscription OnUpdateLocation(
     $filter: ModelSubscriptionLocationFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onUpdateLocation(filter: $filter, owner: $owner) {
+    onUpdateLocation(filter: $filter, userName: $userName) {
+      id
       country
       province
       city
       postalCode
       address
-      coordinates {
-        items {
-          longitude
-          latitude
-          id
-          createdAt
-          updatedAt
-          locationCoordinatesId
-          owner
-        }
-        nextToken
-      }
+      longitude
+      latitude
+      userName
+      eventID
       event {
         id
         organization
@@ -576,39 +558,28 @@ export const onUpdateLocation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventLocationId
-      owner
     }
   }
 `;
 export const onDeleteLocation = /* GraphQL */ `
   subscription OnDeleteLocation(
     $filter: ModelSubscriptionLocationFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onDeleteLocation(filter: $filter, owner: $owner) {
+    onDeleteLocation(filter: $filter, userName: $userName) {
+      id
       country
       province
       city
       postalCode
       address
-      coordinates {
-        items {
-          longitude
-          latitude
-          id
-          createdAt
-          updatedAt
-          locationCoordinatesId
-          owner
-        }
-        nextToken
-      }
+      longitude
+      latitude
+      userName
+      eventID
       event {
         id
         organization
@@ -640,171 +611,23 @@ export const onDeleteLocation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventLocationId
-      owner
-    }
-  }
-`;
-export const onCreateCoordinates = /* GraphQL */ `
-  subscription OnCreateCoordinates(
-    $filter: ModelSubscriptionCoordinatesFilterInput
-    $owner: String
-  ) {
-    onCreateCoordinates(filter: $filter, owner: $owner) {
-      longitude
-      latitude
-      location {
-        country
-        province
-        city
-        postalCode
-        address
-        coordinates {
-          nextToken
-        }
-        event {
-          id
-          organization
-          userName
-          userId
-          eventName
-          eventPrivacy
-          eventType
-          smallDescription
-          ageLimit
-          ticketInfo
-          image1
-          image2
-          image3
-          createdAt
-          updatedAt
-          owner
-        }
-        id
-        createdAt
-        updatedAt
-        eventLocationId
-        owner
-      }
-      id
-      createdAt
-      updatedAt
-      locationCoordinatesId
-      owner
-    }
-  }
-`;
-export const onUpdateCoordinates = /* GraphQL */ `
-  subscription OnUpdateCoordinates(
-    $filter: ModelSubscriptionCoordinatesFilterInput
-    $owner: String
-  ) {
-    onUpdateCoordinates(filter: $filter, owner: $owner) {
-      longitude
-      latitude
-      location {
-        country
-        province
-        city
-        postalCode
-        address
-        coordinates {
-          nextToken
-        }
-        event {
-          id
-          organization
-          userName
-          userId
-          eventName
-          eventPrivacy
-          eventType
-          smallDescription
-          ageLimit
-          ticketInfo
-          image1
-          image2
-          image3
-          createdAt
-          updatedAt
-          owner
-        }
-        id
-        createdAt
-        updatedAt
-        eventLocationId
-        owner
-      }
-      id
-      createdAt
-      updatedAt
-      locationCoordinatesId
-      owner
-    }
-  }
-`;
-export const onDeleteCoordinates = /* GraphQL */ `
-  subscription OnDeleteCoordinates(
-    $filter: ModelSubscriptionCoordinatesFilterInput
-    $owner: String
-  ) {
-    onDeleteCoordinates(filter: $filter, owner: $owner) {
-      longitude
-      latitude
-      location {
-        country
-        province
-        city
-        postalCode
-        address
-        coordinates {
-          nextToken
-        }
-        event {
-          id
-          organization
-          userName
-          userId
-          eventName
-          eventPrivacy
-          eventType
-          smallDescription
-          ageLimit
-          ticketInfo
-          image1
-          image2
-          image3
-          createdAt
-          updatedAt
-          owner
-        }
-        id
-        createdAt
-        updatedAt
-        eventLocationId
-        owner
-      }
-      id
-      createdAt
-      updatedAt
-      locationCoordinatesId
-      owner
     }
   }
 `;
 export const onCreateDescription = /* GraphQL */ `
   subscription OnCreateDescription(
     $filter: ModelSubscriptionDescriptionFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onCreateDescription(filter: $filter, owner: $owner) {
+    onCreateDescription(filter: $filter, userName: $userName) {
+      id
       aboutEvent
       schedule
+      userName
+      eventID
       event {
         id
         organization
@@ -836,24 +659,23 @@ export const onCreateDescription = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDescriptionId
-      owner
     }
   }
 `;
 export const onUpdateDescription = /* GraphQL */ `
   subscription OnUpdateDescription(
     $filter: ModelSubscriptionDescriptionFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onUpdateDescription(filter: $filter, owner: $owner) {
+    onUpdateDescription(filter: $filter, userName: $userName) {
+      id
       aboutEvent
       schedule
+      userName
+      eventID
       event {
         id
         organization
@@ -885,24 +707,23 @@ export const onUpdateDescription = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDescriptionId
-      owner
     }
   }
 `;
 export const onDeleteDescription = /* GraphQL */ `
   subscription OnDeleteDescription(
     $filter: ModelSubscriptionDescriptionFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onDeleteDescription(filter: $filter, owner: $owner) {
+    onDeleteDescription(filter: $filter, userName: $userName) {
+      id
       aboutEvent
       schedule
+      userName
+      eventID
       event {
         id
         organization
@@ -934,22 +755,19 @@ export const onDeleteDescription = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDescriptionId
-      owner
     }
   }
 `;
 export const onCreateContact = /* GraphQL */ `
   subscription OnCreateContact(
     $filter: ModelSubscriptionContactFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onCreateContact(filter: $filter, owner: $owner) {
+    onCreateContact(filter: $filter, userName: $userName) {
+      id
       phone
       email
       website
@@ -958,6 +776,8 @@ export const onCreateContact = /* GraphQL */ `
       snapchat
       tiktok
       youtube
+      userName
+      eventID
       event {
         id
         organization
@@ -989,22 +809,19 @@ export const onCreateContact = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventContactId
-      owner
     }
   }
 `;
 export const onUpdateContact = /* GraphQL */ `
   subscription OnUpdateContact(
     $filter: ModelSubscriptionContactFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onUpdateContact(filter: $filter, owner: $owner) {
+    onUpdateContact(filter: $filter, userName: $userName) {
+      id
       phone
       email
       website
@@ -1013,6 +830,8 @@ export const onUpdateContact = /* GraphQL */ `
       snapchat
       tiktok
       youtube
+      userName
+      eventID
       event {
         id
         organization
@@ -1044,22 +863,19 @@ export const onUpdateContact = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventContactId
-      owner
     }
   }
 `;
 export const onDeleteContact = /* GraphQL */ `
   subscription OnDeleteContact(
     $filter: ModelSubscriptionContactFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onDeleteContact(filter: $filter, owner: $owner) {
+    onDeleteContact(filter: $filter, userName: $userName) {
+      id
       phone
       email
       website
@@ -1068,6 +884,8 @@ export const onDeleteContact = /* GraphQL */ `
       snapchat
       tiktok
       youtube
+      userName
+      eventID
       event {
         id
         organization
@@ -1099,22 +917,19 @@ export const onDeleteContact = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventContactId
-      owner
     }
   }
 `;
 export const onCreateSpecialAccommodation = /* GraphQL */ `
   subscription OnCreateSpecialAccommodation(
     $filter: ModelSubscriptionSpecialAccommodationFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onCreateSpecialAccommodation(filter: $filter, owner: $owner) {
+    onCreateSpecialAccommodation(filter: $filter, userName: $userName) {
+      id
       wheelchairAccessibility
       signLanguageInterpretation
       closedCaptioning
@@ -1124,6 +939,8 @@ export const onCreateSpecialAccommodation = /* GraphQL */ `
       accessibleSeating
       serviceAnimalAccommodation
       sensoryAccommodations
+      userName
+      eventID
       event {
         id
         organization
@@ -1155,22 +972,19 @@ export const onCreateSpecialAccommodation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventSpecialAccommodationId
-      owner
     }
   }
 `;
 export const onUpdateSpecialAccommodation = /* GraphQL */ `
   subscription OnUpdateSpecialAccommodation(
     $filter: ModelSubscriptionSpecialAccommodationFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onUpdateSpecialAccommodation(filter: $filter, owner: $owner) {
+    onUpdateSpecialAccommodation(filter: $filter, userName: $userName) {
+      id
       wheelchairAccessibility
       signLanguageInterpretation
       closedCaptioning
@@ -1180,6 +994,8 @@ export const onUpdateSpecialAccommodation = /* GraphQL */ `
       accessibleSeating
       serviceAnimalAccommodation
       sensoryAccommodations
+      userName
+      eventID
       event {
         id
         organization
@@ -1211,22 +1027,19 @@ export const onUpdateSpecialAccommodation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventSpecialAccommodationId
-      owner
     }
   }
 `;
 export const onDeleteSpecialAccommodation = /* GraphQL */ `
   subscription OnDeleteSpecialAccommodation(
     $filter: ModelSubscriptionSpecialAccommodationFilterInput
-    $owner: String
+    $userName: String
   ) {
-    onDeleteSpecialAccommodation(filter: $filter, owner: $owner) {
+    onDeleteSpecialAccommodation(filter: $filter, userName: $userName) {
+      id
       wheelchairAccessibility
       signLanguageInterpretation
       closedCaptioning
@@ -1236,6 +1049,8 @@ export const onDeleteSpecialAccommodation = /* GraphQL */ `
       accessibleSeating
       serviceAnimalAccommodation
       sensoryAccommodations
+      userName
+      eventID
       event {
         id
         organization
@@ -1267,13 +1082,9 @@ export const onDeleteSpecialAccommodation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventSpecialAccommodationId
-      owner
     }
   }
 `;

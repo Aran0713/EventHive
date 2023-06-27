@@ -17,46 +17,49 @@ export const getEvent = /* GraphQL */ `
       ticketInfo
       dateTime {
         items {
+          id
           date
           startTime
           endTime
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDateTimeId
-          owner
         }
         nextToken
       }
       location {
         items {
+          id
           country
           province
           city
           postalCode
           address
-          id
+          longitude
+          latitude
+          userName
+          eventID
           createdAt
           updatedAt
-          eventLocationId
-          owner
         }
         nextToken
       }
       description {
         items {
+          id
           aboutEvent
           schedule
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDescriptionId
-          owner
         }
         nextToken
       }
       contact {
         items {
+          id
           phone
           email
           website
@@ -65,16 +68,16 @@ export const getEvent = /* GraphQL */ `
           snapchat
           tiktok
           youtube
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventContactId
-          owner
         }
         nextToken
       }
       specialAccommodation {
         items {
+          id
           wheelchairAccessibility
           signLanguageInterpretation
           closedCaptioning
@@ -84,11 +87,10 @@ export const getEvent = /* GraphQL */ `
           accessibleSeating
           serviceAnimalAccommodation
           sensoryAccommodations
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventSpecialAccommodationId
-          owner
         }
         nextToken
       }
@@ -97,7 +99,6 @@ export const getEvent = /* GraphQL */ `
       image3
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -139,7 +140,6 @@ export const listEvents = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -148,9 +148,12 @@ export const listEvents = /* GraphQL */ `
 export const getDateTime = /* GraphQL */ `
   query GetDateTime($id: ID!) {
     getDateTime(id: $id) {
+      id
       date
       startTime
       endTime
+      userName
+      eventID
       event {
         id
         organization
@@ -182,13 +185,9 @@ export const getDateTime = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDateTimeId
-      owner
     }
   }
 `;
@@ -200,9 +199,12 @@ export const listDateTimes = /* GraphQL */ `
   ) {
     listDateTimes(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        id
         date
         startTime
         endTime
+        userName
+        eventID
         event {
           id
           organization
@@ -219,13 +221,9 @@ export const listDateTimes = /* GraphQL */ `
           image3
           createdAt
           updatedAt
-          owner
         }
-        id
         createdAt
         updatedAt
-        eventDateTimeId
-        owner
       }
       nextToken
     }
@@ -234,23 +232,16 @@ export const listDateTimes = /* GraphQL */ `
 export const getLocation = /* GraphQL */ `
   query GetLocation($id: ID!) {
     getLocation(id: $id) {
+      id
       country
       province
       city
       postalCode
       address
-      coordinates {
-        items {
-          longitude
-          latitude
-          id
-          createdAt
-          updatedAt
-          locationCoordinatesId
-          owner
-        }
-        nextToken
-      }
+      longitude
+      latitude
+      userName
+      eventID
       event {
         id
         organization
@@ -282,13 +273,9 @@ export const getLocation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventLocationId
-      owner
     }
   }
 `;
@@ -300,115 +287,35 @@ export const listLocations = /* GraphQL */ `
   ) {
     listLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        id
         country
         province
         city
         postalCode
         address
-        coordinates {
-          nextToken
-        }
-        event {
-          id
-          organization
-          userName
-          userId
-          eventName
-          eventPrivacy
-          eventType
-          smallDescription
-          ageLimit
-          ticketInfo
-          image1
-          image2
-          image3
-          createdAt
-          updatedAt
-          owner
-        }
-        id
-        createdAt
-        updatedAt
-        eventLocationId
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getCoordinates = /* GraphQL */ `
-  query GetCoordinates($id: ID!) {
-    getCoordinates(id: $id) {
-      longitude
-      latitude
-      location {
-        country
-        province
-        city
-        postalCode
-        address
-        coordinates {
-          nextToken
-        }
-        event {
-          id
-          organization
-          userName
-          userId
-          eventName
-          eventPrivacy
-          eventType
-          smallDescription
-          ageLimit
-          ticketInfo
-          image1
-          image2
-          image3
-          createdAt
-          updatedAt
-          owner
-        }
-        id
-        createdAt
-        updatedAt
-        eventLocationId
-        owner
-      }
-      id
-      createdAt
-      updatedAt
-      locationCoordinatesId
-      owner
-    }
-  }
-`;
-export const listCoordinates = /* GraphQL */ `
-  query ListCoordinates(
-    $filter: ModelCoordinatesFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listCoordinates(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
         longitude
         latitude
-        location {
-          country
-          province
-          city
-          postalCode
-          address
+        userName
+        eventID
+        event {
           id
+          organization
+          userName
+          userId
+          eventName
+          eventPrivacy
+          eventType
+          smallDescription
+          ageLimit
+          ticketInfo
+          image1
+          image2
+          image3
           createdAt
           updatedAt
-          eventLocationId
-          owner
         }
-        id
         createdAt
         updatedAt
-        locationCoordinatesId
-        owner
       }
       nextToken
     }
@@ -417,8 +324,11 @@ export const listCoordinates = /* GraphQL */ `
 export const getDescription = /* GraphQL */ `
   query GetDescription($id: ID!) {
     getDescription(id: $id) {
+      id
       aboutEvent
       schedule
+      userName
+      eventID
       event {
         id
         organization
@@ -450,13 +360,9 @@ export const getDescription = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDescriptionId
-      owner
     }
   }
 `;
@@ -468,8 +374,11 @@ export const listDescriptions = /* GraphQL */ `
   ) {
     listDescriptions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        id
         aboutEvent
         schedule
+        userName
+        eventID
         event {
           id
           organization
@@ -486,13 +395,9 @@ export const listDescriptions = /* GraphQL */ `
           image3
           createdAt
           updatedAt
-          owner
         }
-        id
         createdAt
         updatedAt
-        eventDescriptionId
-        owner
       }
       nextToken
     }
@@ -501,6 +406,7 @@ export const listDescriptions = /* GraphQL */ `
 export const getContact = /* GraphQL */ `
   query GetContact($id: ID!) {
     getContact(id: $id) {
+      id
       phone
       email
       website
@@ -509,6 +415,8 @@ export const getContact = /* GraphQL */ `
       snapchat
       tiktok
       youtube
+      userName
+      eventID
       event {
         id
         organization
@@ -540,13 +448,9 @@ export const getContact = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventContactId
-      owner
     }
   }
 `;
@@ -558,6 +462,7 @@ export const listContacts = /* GraphQL */ `
   ) {
     listContacts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        id
         phone
         email
         website
@@ -566,6 +471,8 @@ export const listContacts = /* GraphQL */ `
         snapchat
         tiktok
         youtube
+        userName
+        eventID
         event {
           id
           organization
@@ -582,13 +489,9 @@ export const listContacts = /* GraphQL */ `
           image3
           createdAt
           updatedAt
-          owner
         }
-        id
         createdAt
         updatedAt
-        eventContactId
-        owner
       }
       nextToken
     }
@@ -597,6 +500,7 @@ export const listContacts = /* GraphQL */ `
 export const getSpecialAccommodation = /* GraphQL */ `
   query GetSpecialAccommodation($id: ID!) {
     getSpecialAccommodation(id: $id) {
+      id
       wheelchairAccessibility
       signLanguageInterpretation
       closedCaptioning
@@ -606,6 +510,8 @@ export const getSpecialAccommodation = /* GraphQL */ `
       accessibleSeating
       serviceAnimalAccommodation
       sensoryAccommodations
+      userName
+      eventID
       event {
         id
         organization
@@ -637,13 +543,9 @@ export const getSpecialAccommodation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventSpecialAccommodationId
-      owner
     }
   }
 `;
@@ -659,6 +561,7 @@ export const listSpecialAccommodations = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
+        id
         wheelchairAccessibility
         signLanguageInterpretation
         closedCaptioning
@@ -668,6 +571,8 @@ export const listSpecialAccommodations = /* GraphQL */ `
         accessibleSeating
         serviceAnimalAccommodation
         sensoryAccommodations
+        userName
+        eventID
         event {
           id
           organization
@@ -684,13 +589,9 @@ export const listSpecialAccommodations = /* GraphQL */ `
           image3
           createdAt
           updatedAt
-          owner
         }
-        id
         createdAt
         updatedAt
-        eventSpecialAccommodationId
-        owner
       }
       nextToken
     }

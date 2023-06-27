@@ -110,7 +110,6 @@ export type Event = {
   image3?: string | null,
   createdAt: string,
   updatedAt: string,
-  owner?: string | null,
 };
 
 export type ModelDateTimeConnection = {
@@ -121,15 +120,15 @@ export type ModelDateTimeConnection = {
 
 export type DateTime = {
   __typename: "DateTime",
+  id: string,
   date: string,
   startTime?: string | null,
   endTime?: string | null,
+  userName: string,
+  eventID: string,
   event?: Event | null,
-  id: string,
   createdAt: string,
   updatedAt: string,
-  eventDateTimeId?: string | null,
-  owner?: string | null,
 };
 
 export type ModelLocationConnection = {
@@ -140,36 +139,19 @@ export type ModelLocationConnection = {
 
 export type Location = {
   __typename: "Location",
+  id: string,
   country?: string | null,
   province?: string | null,
   city?: string | null,
   postalCode?: string | null,
   address?: string | null,
-  coordinates?: ModelCoordinatesConnection | null,
-  event?: Event | null,
-  id: string,
-  createdAt: string,
-  updatedAt: string,
-  eventLocationId?: string | null,
-  owner?: string | null,
-};
-
-export type ModelCoordinatesConnection = {
-  __typename: "ModelCoordinatesConnection",
-  items:  Array<Coordinates | null >,
-  nextToken?: string | null,
-};
-
-export type Coordinates = {
-  __typename: "Coordinates",
   longitude: string,
   latitude: string,
-  location?: Location | null,
-  id: string,
+  userName: string,
+  eventID: string,
+  event?: Event | null,
   createdAt: string,
   updatedAt: string,
-  locationCoordinatesId?: string | null,
-  owner?: string | null,
 };
 
 export type ModelDescriptionConnection = {
@@ -180,14 +162,14 @@ export type ModelDescriptionConnection = {
 
 export type Description = {
   __typename: "Description",
+  id: string,
   aboutEvent?: string | null,
   schedule?: string | null,
+  userName: string,
+  eventID: string,
   event?: Event | null,
-  id: string,
   createdAt: string,
   updatedAt: string,
-  eventDescriptionId?: string | null,
-  owner?: string | null,
 };
 
 export type ModelContactConnection = {
@@ -198,6 +180,7 @@ export type ModelContactConnection = {
 
 export type Contact = {
   __typename: "Contact",
+  id: string,
   phone?: string | null,
   email?: string | null,
   website?: string | null,
@@ -206,12 +189,11 @@ export type Contact = {
   snapchat?: string | null,
   tiktok?: string | null,
   youtube?: string | null,
+  userName: string,
+  eventID: string,
   event?: Event | null,
-  id: string,
   createdAt: string,
   updatedAt: string,
-  eventContactId?: string | null,
-  owner?: string | null,
 };
 
 export type ModelSpecialAccommodationConnection = {
@@ -222,6 +204,7 @@ export type ModelSpecialAccommodationConnection = {
 
 export type SpecialAccommodation = {
   __typename: "SpecialAccommodation",
+  id: string,
   wheelchairAccessibility?: string | null,
   signLanguageInterpretation?: string | null,
   closedCaptioning?: string | null,
@@ -231,12 +214,11 @@ export type SpecialAccommodation = {
   accessibleSeating?: string | null,
   serviceAnimalAccommodation?: string | null,
   sensoryAccommodations?: string | null,
+  userName: string,
+  eventID: string,
   event?: Event | null,
-  id: string,
   createdAt: string,
   updatedAt: string,
-  eventSpecialAccommodationId?: string | null,
-  owner?: string | null,
 };
 
 export type UpdateEventInput = {
@@ -260,21 +242,23 @@ export type DeleteEventInput = {
 };
 
 export type CreateDateTimeInput = {
+  id?: string | null,
   date: string,
   startTime?: string | null,
   endTime?: string | null,
-  id?: string | null,
-  eventDateTimeId?: string | null,
+  userName: string,
+  eventID: string,
 };
 
 export type ModelDateTimeConditionInput = {
   date?: ModelStringInput | null,
   startTime?: ModelStringInput | null,
   endTime?: ModelStringInput | null,
+  userName?: ModelStringInput | null,
+  eventID?: ModelIDInput | null,
   and?: Array< ModelDateTimeConditionInput | null > | null,
   or?: Array< ModelDateTimeConditionInput | null > | null,
   not?: ModelDateTimeConditionInput | null,
-  eventDateTimeId?: ModelIDInput | null,
 };
 
 export type ModelIDInput = {
@@ -294,11 +278,12 @@ export type ModelIDInput = {
 };
 
 export type UpdateDateTimeInput = {
+  id: string,
   date?: string | null,
   startTime?: string | null,
   endTime?: string | null,
-  id: string,
-  eventDateTimeId?: string | null,
+  userName?: string | null,
+  eventID?: string | null,
 };
 
 export type DeleteDateTimeInput = {
@@ -306,13 +291,16 @@ export type DeleteDateTimeInput = {
 };
 
 export type CreateLocationInput = {
+  id?: string | null,
   country?: string | null,
   province?: string | null,
   city?: string | null,
   postalCode?: string | null,
   address?: string | null,
-  id?: string | null,
-  eventLocationId?: string | null,
+  longitude: string,
+  latitude: string,
+  userName: string,
+  eventID: string,
 };
 
 export type ModelLocationConditionInput = {
@@ -321,74 +309,56 @@ export type ModelLocationConditionInput = {
   city?: ModelStringInput | null,
   postalCode?: ModelStringInput | null,
   address?: ModelStringInput | null,
+  longitude?: ModelStringInput | null,
+  latitude?: ModelStringInput | null,
+  userName?: ModelStringInput | null,
+  eventID?: ModelIDInput | null,
   and?: Array< ModelLocationConditionInput | null > | null,
   or?: Array< ModelLocationConditionInput | null > | null,
   not?: ModelLocationConditionInput | null,
-  eventLocationId?: ModelIDInput | null,
 };
 
 export type UpdateLocationInput = {
+  id: string,
   country?: string | null,
   province?: string | null,
   city?: string | null,
   postalCode?: string | null,
   address?: string | null,
-  id: string,
-  eventLocationId?: string | null,
+  longitude?: string | null,
+  latitude?: string | null,
+  userName?: string | null,
+  eventID?: string | null,
 };
 
 export type DeleteLocationInput = {
   id: string,
 };
 
-export type CreateCoordinatesInput = {
-  longitude: string,
-  latitude: string,
-  id?: string | null,
-  locationCoordinatesId?: string | null,
-};
-
-export type ModelCoordinatesConditionInput = {
-  longitude?: ModelStringInput | null,
-  latitude?: ModelStringInput | null,
-  and?: Array< ModelCoordinatesConditionInput | null > | null,
-  or?: Array< ModelCoordinatesConditionInput | null > | null,
-  not?: ModelCoordinatesConditionInput | null,
-  locationCoordinatesId?: ModelIDInput | null,
-};
-
-export type UpdateCoordinatesInput = {
-  longitude?: string | null,
-  latitude?: string | null,
-  id: string,
-  locationCoordinatesId?: string | null,
-};
-
-export type DeleteCoordinatesInput = {
-  id: string,
-};
-
 export type CreateDescriptionInput = {
+  id?: string | null,
   aboutEvent?: string | null,
   schedule?: string | null,
-  id?: string | null,
-  eventDescriptionId?: string | null,
+  userName: string,
+  eventID: string,
 };
 
 export type ModelDescriptionConditionInput = {
   aboutEvent?: ModelStringInput | null,
   schedule?: ModelStringInput | null,
+  userName?: ModelStringInput | null,
+  eventID?: ModelIDInput | null,
   and?: Array< ModelDescriptionConditionInput | null > | null,
   or?: Array< ModelDescriptionConditionInput | null > | null,
   not?: ModelDescriptionConditionInput | null,
-  eventDescriptionId?: ModelIDInput | null,
 };
 
 export type UpdateDescriptionInput = {
+  id: string,
   aboutEvent?: string | null,
   schedule?: string | null,
-  id: string,
-  eventDescriptionId?: string | null,
+  userName?: string | null,
+  eventID?: string | null,
 };
 
 export type DeleteDescriptionInput = {
@@ -396,6 +366,7 @@ export type DeleteDescriptionInput = {
 };
 
 export type CreateContactInput = {
+  id?: string | null,
   phone?: string | null,
   email?: string | null,
   website?: string | null,
@@ -404,8 +375,8 @@ export type CreateContactInput = {
   snapchat?: string | null,
   tiktok?: string | null,
   youtube?: string | null,
-  id?: string | null,
-  eventContactId?: string | null,
+  userName: string,
+  eventID: string,
 };
 
 export type ModelContactConditionInput = {
@@ -417,13 +388,15 @@ export type ModelContactConditionInput = {
   snapchat?: ModelStringInput | null,
   tiktok?: ModelStringInput | null,
   youtube?: ModelStringInput | null,
+  userName?: ModelStringInput | null,
+  eventID?: ModelIDInput | null,
   and?: Array< ModelContactConditionInput | null > | null,
   or?: Array< ModelContactConditionInput | null > | null,
   not?: ModelContactConditionInput | null,
-  eventContactId?: ModelIDInput | null,
 };
 
 export type UpdateContactInput = {
+  id: string,
   phone?: string | null,
   email?: string | null,
   website?: string | null,
@@ -432,8 +405,8 @@ export type UpdateContactInput = {
   snapchat?: string | null,
   tiktok?: string | null,
   youtube?: string | null,
-  id: string,
-  eventContactId?: string | null,
+  userName?: string | null,
+  eventID?: string | null,
 };
 
 export type DeleteContactInput = {
@@ -441,6 +414,7 @@ export type DeleteContactInput = {
 };
 
 export type CreateSpecialAccommodationInput = {
+  id?: string | null,
   wheelchairAccessibility?: string | null,
   signLanguageInterpretation?: string | null,
   closedCaptioning?: string | null,
@@ -450,8 +424,8 @@ export type CreateSpecialAccommodationInput = {
   accessibleSeating?: string | null,
   serviceAnimalAccommodation?: string | null,
   sensoryAccommodations?: string | null,
-  id?: string | null,
-  eventSpecialAccommodationId?: string | null,
+  userName: string,
+  eventID: string,
 };
 
 export type ModelSpecialAccommodationConditionInput = {
@@ -464,13 +438,15 @@ export type ModelSpecialAccommodationConditionInput = {
   accessibleSeating?: ModelStringInput | null,
   serviceAnimalAccommodation?: ModelStringInput | null,
   sensoryAccommodations?: ModelStringInput | null,
+  userName?: ModelStringInput | null,
+  eventID?: ModelIDInput | null,
   and?: Array< ModelSpecialAccommodationConditionInput | null > | null,
   or?: Array< ModelSpecialAccommodationConditionInput | null > | null,
   not?: ModelSpecialAccommodationConditionInput | null,
-  eventSpecialAccommodationId?: ModelIDInput | null,
 };
 
 export type UpdateSpecialAccommodationInput = {
+  id: string,
   wheelchairAccessibility?: string | null,
   signLanguageInterpretation?: string | null,
   closedCaptioning?: string | null,
@@ -480,8 +456,8 @@ export type UpdateSpecialAccommodationInput = {
   accessibleSeating?: string | null,
   serviceAnimalAccommodation?: string | null,
   sensoryAccommodations?: string | null,
-  id: string,
-  eventSpecialAccommodationId?: string | null,
+  userName?: string | null,
+  eventID?: string | null,
 };
 
 export type DeleteSpecialAccommodationInput = {
@@ -514,46 +490,46 @@ export type ModelEventConnection = {
 };
 
 export type ModelDateTimeFilterInput = {
+  id?: ModelIDInput | null,
   date?: ModelStringInput | null,
   startTime?: ModelStringInput | null,
   endTime?: ModelStringInput | null,
+  userName?: ModelStringInput | null,
+  eventID?: ModelIDInput | null,
   and?: Array< ModelDateTimeFilterInput | null > | null,
   or?: Array< ModelDateTimeFilterInput | null > | null,
   not?: ModelDateTimeFilterInput | null,
-  eventDateTimeId?: ModelIDInput | null,
 };
 
 export type ModelLocationFilterInput = {
+  id?: ModelIDInput | null,
   country?: ModelStringInput | null,
   province?: ModelStringInput | null,
   city?: ModelStringInput | null,
   postalCode?: ModelStringInput | null,
   address?: ModelStringInput | null,
+  longitude?: ModelStringInput | null,
+  latitude?: ModelStringInput | null,
+  userName?: ModelStringInput | null,
+  eventID?: ModelIDInput | null,
   and?: Array< ModelLocationFilterInput | null > | null,
   or?: Array< ModelLocationFilterInput | null > | null,
   not?: ModelLocationFilterInput | null,
-  eventLocationId?: ModelIDInput | null,
-};
-
-export type ModelCoordinatesFilterInput = {
-  longitude?: ModelStringInput | null,
-  latitude?: ModelStringInput | null,
-  and?: Array< ModelCoordinatesFilterInput | null > | null,
-  or?: Array< ModelCoordinatesFilterInput | null > | null,
-  not?: ModelCoordinatesFilterInput | null,
-  locationCoordinatesId?: ModelIDInput | null,
 };
 
 export type ModelDescriptionFilterInput = {
+  id?: ModelIDInput | null,
   aboutEvent?: ModelStringInput | null,
   schedule?: ModelStringInput | null,
+  userName?: ModelStringInput | null,
+  eventID?: ModelIDInput | null,
   and?: Array< ModelDescriptionFilterInput | null > | null,
   or?: Array< ModelDescriptionFilterInput | null > | null,
   not?: ModelDescriptionFilterInput | null,
-  eventDescriptionId?: ModelIDInput | null,
 };
 
 export type ModelContactFilterInput = {
+  id?: ModelIDInput | null,
   phone?: ModelStringInput | null,
   email?: ModelStringInput | null,
   website?: ModelStringInput | null,
@@ -562,13 +538,15 @@ export type ModelContactFilterInput = {
   snapchat?: ModelStringInput | null,
   tiktok?: ModelStringInput | null,
   youtube?: ModelStringInput | null,
+  userName?: ModelStringInput | null,
+  eventID?: ModelIDInput | null,
   and?: Array< ModelContactFilterInput | null > | null,
   or?: Array< ModelContactFilterInput | null > | null,
   not?: ModelContactFilterInput | null,
-  eventContactId?: ModelIDInput | null,
 };
 
 export type ModelSpecialAccommodationFilterInput = {
+  id?: ModelIDInput | null,
   wheelchairAccessibility?: ModelStringInput | null,
   signLanguageInterpretation?: ModelStringInput | null,
   closedCaptioning?: ModelStringInput | null,
@@ -578,16 +556,16 @@ export type ModelSpecialAccommodationFilterInput = {
   accessibleSeating?: ModelStringInput | null,
   serviceAnimalAccommodation?: ModelStringInput | null,
   sensoryAccommodations?: ModelStringInput | null,
+  userName?: ModelStringInput | null,
+  eventID?: ModelIDInput | null,
   and?: Array< ModelSpecialAccommodationFilterInput | null > | null,
   or?: Array< ModelSpecialAccommodationFilterInput | null > | null,
   not?: ModelSpecialAccommodationFilterInput | null,
-  eventSpecialAccommodationId?: ModelIDInput | null,
 };
 
 export type ModelSubscriptionEventFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   organization?: ModelSubscriptionStringInput | null,
-  userName?: ModelSubscriptionStringInput | null,
   userId?: ModelSubscriptionStringInput | null,
   eventName?: ModelSubscriptionStringInput | null,
   eventPrivacy?: ModelSubscriptionStringInput | null,
@@ -645,38 +623,40 @@ export type ModelSubscriptionIntInput = {
 };
 
 export type ModelSubscriptionDateTimeFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
   date?: ModelSubscriptionStringInput | null,
   startTime?: ModelSubscriptionStringInput | null,
   endTime?: ModelSubscriptionStringInput | null,
+  eventID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionDateTimeFilterInput | null > | null,
   or?: Array< ModelSubscriptionDateTimeFilterInput | null > | null,
 };
 
 export type ModelSubscriptionLocationFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
   country?: ModelSubscriptionStringInput | null,
   province?: ModelSubscriptionStringInput | null,
   city?: ModelSubscriptionStringInput | null,
   postalCode?: ModelSubscriptionStringInput | null,
   address?: ModelSubscriptionStringInput | null,
+  longitude?: ModelSubscriptionStringInput | null,
+  latitude?: ModelSubscriptionStringInput | null,
+  eventID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionLocationFilterInput | null > | null,
   or?: Array< ModelSubscriptionLocationFilterInput | null > | null,
 };
 
-export type ModelSubscriptionCoordinatesFilterInput = {
-  longitude?: ModelSubscriptionStringInput | null,
-  latitude?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionCoordinatesFilterInput | null > | null,
-  or?: Array< ModelSubscriptionCoordinatesFilterInput | null > | null,
-};
-
 export type ModelSubscriptionDescriptionFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
   aboutEvent?: ModelSubscriptionStringInput | null,
   schedule?: ModelSubscriptionStringInput | null,
+  eventID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionDescriptionFilterInput | null > | null,
   or?: Array< ModelSubscriptionDescriptionFilterInput | null > | null,
 };
 
 export type ModelSubscriptionContactFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
   phone?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
   website?: ModelSubscriptionStringInput | null,
@@ -685,11 +665,13 @@ export type ModelSubscriptionContactFilterInput = {
   snapchat?: ModelSubscriptionStringInput | null,
   tiktok?: ModelSubscriptionStringInput | null,
   youtube?: ModelSubscriptionStringInput | null,
+  eventID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionContactFilterInput | null > | null,
   or?: Array< ModelSubscriptionContactFilterInput | null > | null,
 };
 
 export type ModelSubscriptionSpecialAccommodationFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
   wheelchairAccessibility?: ModelSubscriptionStringInput | null,
   signLanguageInterpretation?: ModelSubscriptionStringInput | null,
   closedCaptioning?: ModelSubscriptionStringInput | null,
@@ -699,6 +681,7 @@ export type ModelSubscriptionSpecialAccommodationFilterInput = {
   accessibleSeating?: ModelSubscriptionStringInput | null,
   serviceAnimalAccommodation?: ModelSubscriptionStringInput | null,
   sensoryAccommodations?: ModelSubscriptionStringInput | null,
+  eventID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionSpecialAccommodationFilterInput | null > | null,
   or?: Array< ModelSubscriptionSpecialAccommodationFilterInput | null > | null,
 };
@@ -725,14 +708,14 @@ export type CreateEventMutation = {
       __typename: "ModelDateTimeConnection",
       items:  Array< {
         __typename: "DateTime",
+        id: string,
         date: string,
         startTime?: string | null,
         endTime?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDateTimeId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -740,16 +723,18 @@ export type CreateEventMutation = {
       __typename: "ModelLocationConnection",
       items:  Array< {
         __typename: "Location",
+        id: string,
         country?: string | null,
         province?: string | null,
         city?: string | null,
         postalCode?: string | null,
         address?: string | null,
-        id: string,
+        longitude: string,
+        latitude: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventLocationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -757,13 +742,13 @@ export type CreateEventMutation = {
       __typename: "ModelDescriptionConnection",
       items:  Array< {
         __typename: "Description",
+        id: string,
         aboutEvent?: string | null,
         schedule?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDescriptionId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -771,6 +756,7 @@ export type CreateEventMutation = {
       __typename: "ModelContactConnection",
       items:  Array< {
         __typename: "Contact",
+        id: string,
         phone?: string | null,
         email?: string | null,
         website?: string | null,
@@ -779,11 +765,10 @@ export type CreateEventMutation = {
         snapchat?: string | null,
         tiktok?: string | null,
         youtube?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventContactId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -791,6 +776,7 @@ export type CreateEventMutation = {
       __typename: "ModelSpecialAccommodationConnection",
       items:  Array< {
         __typename: "SpecialAccommodation",
+        id: string,
         wheelchairAccessibility?: string | null,
         signLanguageInterpretation?: string | null,
         closedCaptioning?: string | null,
@@ -800,11 +786,10 @@ export type CreateEventMutation = {
         accessibleSeating?: string | null,
         serviceAnimalAccommodation?: string | null,
         sensoryAccommodations?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventSpecialAccommodationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -813,7 +798,6 @@ export type CreateEventMutation = {
     image3?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -839,14 +823,14 @@ export type UpdateEventMutation = {
       __typename: "ModelDateTimeConnection",
       items:  Array< {
         __typename: "DateTime",
+        id: string,
         date: string,
         startTime?: string | null,
         endTime?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDateTimeId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -854,16 +838,18 @@ export type UpdateEventMutation = {
       __typename: "ModelLocationConnection",
       items:  Array< {
         __typename: "Location",
+        id: string,
         country?: string | null,
         province?: string | null,
         city?: string | null,
         postalCode?: string | null,
         address?: string | null,
-        id: string,
+        longitude: string,
+        latitude: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventLocationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -871,13 +857,13 @@ export type UpdateEventMutation = {
       __typename: "ModelDescriptionConnection",
       items:  Array< {
         __typename: "Description",
+        id: string,
         aboutEvent?: string | null,
         schedule?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDescriptionId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -885,6 +871,7 @@ export type UpdateEventMutation = {
       __typename: "ModelContactConnection",
       items:  Array< {
         __typename: "Contact",
+        id: string,
         phone?: string | null,
         email?: string | null,
         website?: string | null,
@@ -893,11 +880,10 @@ export type UpdateEventMutation = {
         snapchat?: string | null,
         tiktok?: string | null,
         youtube?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventContactId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -905,6 +891,7 @@ export type UpdateEventMutation = {
       __typename: "ModelSpecialAccommodationConnection",
       items:  Array< {
         __typename: "SpecialAccommodation",
+        id: string,
         wheelchairAccessibility?: string | null,
         signLanguageInterpretation?: string | null,
         closedCaptioning?: string | null,
@@ -914,11 +901,10 @@ export type UpdateEventMutation = {
         accessibleSeating?: string | null,
         serviceAnimalAccommodation?: string | null,
         sensoryAccommodations?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventSpecialAccommodationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -927,7 +913,6 @@ export type UpdateEventMutation = {
     image3?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -953,14 +938,14 @@ export type DeleteEventMutation = {
       __typename: "ModelDateTimeConnection",
       items:  Array< {
         __typename: "DateTime",
+        id: string,
         date: string,
         startTime?: string | null,
         endTime?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDateTimeId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -968,16 +953,18 @@ export type DeleteEventMutation = {
       __typename: "ModelLocationConnection",
       items:  Array< {
         __typename: "Location",
+        id: string,
         country?: string | null,
         province?: string | null,
         city?: string | null,
         postalCode?: string | null,
         address?: string | null,
-        id: string,
+        longitude: string,
+        latitude: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventLocationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -985,13 +972,13 @@ export type DeleteEventMutation = {
       __typename: "ModelDescriptionConnection",
       items:  Array< {
         __typename: "Description",
+        id: string,
         aboutEvent?: string | null,
         schedule?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDescriptionId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -999,6 +986,7 @@ export type DeleteEventMutation = {
       __typename: "ModelContactConnection",
       items:  Array< {
         __typename: "Contact",
+        id: string,
         phone?: string | null,
         email?: string | null,
         website?: string | null,
@@ -1007,11 +995,10 @@ export type DeleteEventMutation = {
         snapchat?: string | null,
         tiktok?: string | null,
         youtube?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventContactId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1019,6 +1006,7 @@ export type DeleteEventMutation = {
       __typename: "ModelSpecialAccommodationConnection",
       items:  Array< {
         __typename: "SpecialAccommodation",
+        id: string,
         wheelchairAccessibility?: string | null,
         signLanguageInterpretation?: string | null,
         closedCaptioning?: string | null,
@@ -1028,11 +1016,10 @@ export type DeleteEventMutation = {
         accessibleSeating?: string | null,
         serviceAnimalAccommodation?: string | null,
         sensoryAccommodations?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventSpecialAccommodationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1041,7 +1028,6 @@ export type DeleteEventMutation = {
     image3?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -1053,9 +1039,12 @@ export type CreateDateTimeMutationVariables = {
 export type CreateDateTimeMutation = {
   createDateTime?:  {
     __typename: "DateTime",
+    id: string,
     date: string,
     startTime?: string | null,
     endTime?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -1093,13 +1082,9 @@ export type CreateDateTimeMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDateTimeId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -1111,9 +1096,12 @@ export type UpdateDateTimeMutationVariables = {
 export type UpdateDateTimeMutation = {
   updateDateTime?:  {
     __typename: "DateTime",
+    id: string,
     date: string,
     startTime?: string | null,
     endTime?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -1151,13 +1139,9 @@ export type UpdateDateTimeMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDateTimeId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -1169,9 +1153,12 @@ export type DeleteDateTimeMutationVariables = {
 export type DeleteDateTimeMutation = {
   deleteDateTime?:  {
     __typename: "DateTime",
+    id: string,
     date: string,
     startTime?: string | null,
     endTime?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -1209,13 +1196,9 @@ export type DeleteDateTimeMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDateTimeId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -1227,25 +1210,16 @@ export type CreateLocationMutationVariables = {
 export type CreateLocationMutation = {
   createLocation?:  {
     __typename: "Location",
+    id: string,
     country?: string | null,
     province?: string | null,
     city?: string | null,
     postalCode?: string | null,
     address?: string | null,
-    coordinates?:  {
-      __typename: "ModelCoordinatesConnection",
-      items:  Array< {
-        __typename: "Coordinates",
-        longitude: string,
-        latitude: string,
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-        locationCoordinatesId?: string | null,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    longitude: string,
+    latitude: string,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -1283,13 +1257,9 @@ export type CreateLocationMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventLocationId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -1301,25 +1271,16 @@ export type UpdateLocationMutationVariables = {
 export type UpdateLocationMutation = {
   updateLocation?:  {
     __typename: "Location",
+    id: string,
     country?: string | null,
     province?: string | null,
     city?: string | null,
     postalCode?: string | null,
     address?: string | null,
-    coordinates?:  {
-      __typename: "ModelCoordinatesConnection",
-      items:  Array< {
-        __typename: "Coordinates",
-        longitude: string,
-        latitude: string,
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-        locationCoordinatesId?: string | null,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    longitude: string,
+    latitude: string,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -1357,13 +1318,9 @@ export type UpdateLocationMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventLocationId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -1375,25 +1332,16 @@ export type DeleteLocationMutationVariables = {
 export type DeleteLocationMutation = {
   deleteLocation?:  {
     __typename: "Location",
+    id: string,
     country?: string | null,
     province?: string | null,
     city?: string | null,
     postalCode?: string | null,
     address?: string | null,
-    coordinates?:  {
-      __typename: "ModelCoordinatesConnection",
-      items:  Array< {
-        __typename: "Coordinates",
-        longitude: string,
-        latitude: string,
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-        locationCoordinatesId?: string | null,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    longitude: string,
+    latitude: string,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -1431,175 +1379,9 @@ export type DeleteLocationMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventLocationId?: string | null,
-    owner?: string | null,
-  } | null,
-};
-
-export type CreateCoordinatesMutationVariables = {
-  input: CreateCoordinatesInput,
-  condition?: ModelCoordinatesConditionInput | null,
-};
-
-export type CreateCoordinatesMutation = {
-  createCoordinates?:  {
-    __typename: "Coordinates",
-    longitude: string,
-    latitude: string,
-    location?:  {
-      __typename: "Location",
-      country?: string | null,
-      province?: string | null,
-      city?: string | null,
-      postalCode?: string | null,
-      address?: string | null,
-      coordinates?:  {
-        __typename: "ModelCoordinatesConnection",
-        nextToken?: string | null,
-      } | null,
-      event?:  {
-        __typename: "Event",
-        id: string,
-        organization: string,
-        userName: string,
-        userId?: string | null,
-        eventName: string,
-        eventPrivacy: string,
-        eventType?: string | null,
-        smallDescription?: string | null,
-        ageLimit?: number | null,
-        ticketInfo?: string | null,
-        image1?: string | null,
-        image2?: string | null,
-        image3?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
-      } | null,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      eventLocationId?: string | null,
-      owner?: string | null,
-    } | null,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-    locationCoordinatesId?: string | null,
-    owner?: string | null,
-  } | null,
-};
-
-export type UpdateCoordinatesMutationVariables = {
-  input: UpdateCoordinatesInput,
-  condition?: ModelCoordinatesConditionInput | null,
-};
-
-export type UpdateCoordinatesMutation = {
-  updateCoordinates?:  {
-    __typename: "Coordinates",
-    longitude: string,
-    latitude: string,
-    location?:  {
-      __typename: "Location",
-      country?: string | null,
-      province?: string | null,
-      city?: string | null,
-      postalCode?: string | null,
-      address?: string | null,
-      coordinates?:  {
-        __typename: "ModelCoordinatesConnection",
-        nextToken?: string | null,
-      } | null,
-      event?:  {
-        __typename: "Event",
-        id: string,
-        organization: string,
-        userName: string,
-        userId?: string | null,
-        eventName: string,
-        eventPrivacy: string,
-        eventType?: string | null,
-        smallDescription?: string | null,
-        ageLimit?: number | null,
-        ticketInfo?: string | null,
-        image1?: string | null,
-        image2?: string | null,
-        image3?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
-      } | null,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      eventLocationId?: string | null,
-      owner?: string | null,
-    } | null,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-    locationCoordinatesId?: string | null,
-    owner?: string | null,
-  } | null,
-};
-
-export type DeleteCoordinatesMutationVariables = {
-  input: DeleteCoordinatesInput,
-  condition?: ModelCoordinatesConditionInput | null,
-};
-
-export type DeleteCoordinatesMutation = {
-  deleteCoordinates?:  {
-    __typename: "Coordinates",
-    longitude: string,
-    latitude: string,
-    location?:  {
-      __typename: "Location",
-      country?: string | null,
-      province?: string | null,
-      city?: string | null,
-      postalCode?: string | null,
-      address?: string | null,
-      coordinates?:  {
-        __typename: "ModelCoordinatesConnection",
-        nextToken?: string | null,
-      } | null,
-      event?:  {
-        __typename: "Event",
-        id: string,
-        organization: string,
-        userName: string,
-        userId?: string | null,
-        eventName: string,
-        eventPrivacy: string,
-        eventType?: string | null,
-        smallDescription?: string | null,
-        ageLimit?: number | null,
-        ticketInfo?: string | null,
-        image1?: string | null,
-        image2?: string | null,
-        image3?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
-      } | null,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      eventLocationId?: string | null,
-      owner?: string | null,
-    } | null,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-    locationCoordinatesId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -1611,8 +1393,11 @@ export type CreateDescriptionMutationVariables = {
 export type CreateDescriptionMutation = {
   createDescription?:  {
     __typename: "Description",
+    id: string,
     aboutEvent?: string | null,
     schedule?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -1650,13 +1435,9 @@ export type CreateDescriptionMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDescriptionId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -1668,8 +1449,11 @@ export type UpdateDescriptionMutationVariables = {
 export type UpdateDescriptionMutation = {
   updateDescription?:  {
     __typename: "Description",
+    id: string,
     aboutEvent?: string | null,
     schedule?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -1707,13 +1491,9 @@ export type UpdateDescriptionMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDescriptionId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -1725,8 +1505,11 @@ export type DeleteDescriptionMutationVariables = {
 export type DeleteDescriptionMutation = {
   deleteDescription?:  {
     __typename: "Description",
+    id: string,
     aboutEvent?: string | null,
     schedule?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -1764,13 +1547,9 @@ export type DeleteDescriptionMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDescriptionId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -1782,6 +1561,7 @@ export type CreateContactMutationVariables = {
 export type CreateContactMutation = {
   createContact?:  {
     __typename: "Contact",
+    id: string,
     phone?: string | null,
     email?: string | null,
     website?: string | null,
@@ -1790,6 +1570,8 @@ export type CreateContactMutation = {
     snapchat?: string | null,
     tiktok?: string | null,
     youtube?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -1827,13 +1609,9 @@ export type CreateContactMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventContactId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -1845,6 +1623,7 @@ export type UpdateContactMutationVariables = {
 export type UpdateContactMutation = {
   updateContact?:  {
     __typename: "Contact",
+    id: string,
     phone?: string | null,
     email?: string | null,
     website?: string | null,
@@ -1853,6 +1632,8 @@ export type UpdateContactMutation = {
     snapchat?: string | null,
     tiktok?: string | null,
     youtube?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -1890,13 +1671,9 @@ export type UpdateContactMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventContactId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -1908,6 +1685,7 @@ export type DeleteContactMutationVariables = {
 export type DeleteContactMutation = {
   deleteContact?:  {
     __typename: "Contact",
+    id: string,
     phone?: string | null,
     email?: string | null,
     website?: string | null,
@@ -1916,6 +1694,8 @@ export type DeleteContactMutation = {
     snapchat?: string | null,
     tiktok?: string | null,
     youtube?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -1953,13 +1733,9 @@ export type DeleteContactMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventContactId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -1971,6 +1747,7 @@ export type CreateSpecialAccommodationMutationVariables = {
 export type CreateSpecialAccommodationMutation = {
   createSpecialAccommodation?:  {
     __typename: "SpecialAccommodation",
+    id: string,
     wheelchairAccessibility?: string | null,
     signLanguageInterpretation?: string | null,
     closedCaptioning?: string | null,
@@ -1980,6 +1757,8 @@ export type CreateSpecialAccommodationMutation = {
     accessibleSeating?: string | null,
     serviceAnimalAccommodation?: string | null,
     sensoryAccommodations?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -2017,13 +1796,9 @@ export type CreateSpecialAccommodationMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventSpecialAccommodationId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -2035,6 +1810,7 @@ export type UpdateSpecialAccommodationMutationVariables = {
 export type UpdateSpecialAccommodationMutation = {
   updateSpecialAccommodation?:  {
     __typename: "SpecialAccommodation",
+    id: string,
     wheelchairAccessibility?: string | null,
     signLanguageInterpretation?: string | null,
     closedCaptioning?: string | null,
@@ -2044,6 +1820,8 @@ export type UpdateSpecialAccommodationMutation = {
     accessibleSeating?: string | null,
     serviceAnimalAccommodation?: string | null,
     sensoryAccommodations?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -2081,13 +1859,9 @@ export type UpdateSpecialAccommodationMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventSpecialAccommodationId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -2099,6 +1873,7 @@ export type DeleteSpecialAccommodationMutationVariables = {
 export type DeleteSpecialAccommodationMutation = {
   deleteSpecialAccommodation?:  {
     __typename: "SpecialAccommodation",
+    id: string,
     wheelchairAccessibility?: string | null,
     signLanguageInterpretation?: string | null,
     closedCaptioning?: string | null,
@@ -2108,6 +1883,8 @@ export type DeleteSpecialAccommodationMutation = {
     accessibleSeating?: string | null,
     serviceAnimalAccommodation?: string | null,
     sensoryAccommodations?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -2145,13 +1922,9 @@ export type DeleteSpecialAccommodationMutation = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventSpecialAccommodationId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -2176,14 +1949,14 @@ export type GetEventQuery = {
       __typename: "ModelDateTimeConnection",
       items:  Array< {
         __typename: "DateTime",
+        id: string,
         date: string,
         startTime?: string | null,
         endTime?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDateTimeId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2191,16 +1964,18 @@ export type GetEventQuery = {
       __typename: "ModelLocationConnection",
       items:  Array< {
         __typename: "Location",
+        id: string,
         country?: string | null,
         province?: string | null,
         city?: string | null,
         postalCode?: string | null,
         address?: string | null,
-        id: string,
+        longitude: string,
+        latitude: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventLocationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2208,13 +1983,13 @@ export type GetEventQuery = {
       __typename: "ModelDescriptionConnection",
       items:  Array< {
         __typename: "Description",
+        id: string,
         aboutEvent?: string | null,
         schedule?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDescriptionId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2222,6 +1997,7 @@ export type GetEventQuery = {
       __typename: "ModelContactConnection",
       items:  Array< {
         __typename: "Contact",
+        id: string,
         phone?: string | null,
         email?: string | null,
         website?: string | null,
@@ -2230,11 +2006,10 @@ export type GetEventQuery = {
         snapchat?: string | null,
         tiktok?: string | null,
         youtube?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventContactId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2242,6 +2017,7 @@ export type GetEventQuery = {
       __typename: "ModelSpecialAccommodationConnection",
       items:  Array< {
         __typename: "SpecialAccommodation",
+        id: string,
         wheelchairAccessibility?: string | null,
         signLanguageInterpretation?: string | null,
         closedCaptioning?: string | null,
@@ -2251,11 +2027,10 @@ export type GetEventQuery = {
         accessibleSeating?: string | null,
         serviceAnimalAccommodation?: string | null,
         sensoryAccommodations?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventSpecialAccommodationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2264,7 +2039,6 @@ export type GetEventQuery = {
     image3?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -2314,7 +2088,6 @@ export type ListEventsQuery = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2327,9 +2100,12 @@ export type GetDateTimeQueryVariables = {
 export type GetDateTimeQuery = {
   getDateTime?:  {
     __typename: "DateTime",
+    id: string,
     date: string,
     startTime?: string | null,
     endTime?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -2367,13 +2143,9 @@ export type GetDateTimeQuery = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDateTimeId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -2388,9 +2160,12 @@ export type ListDateTimesQuery = {
     __typename: "ModelDateTimeConnection",
     items:  Array< {
       __typename: "DateTime",
+      id: string,
       date: string,
       startTime?: string | null,
       endTime?: string | null,
+      userName: string,
+      eventID: string,
       event?:  {
         __typename: "Event",
         id: string,
@@ -2408,13 +2183,9 @@ export type ListDateTimesQuery = {
         image3?: string | null,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
-      id: string,
       createdAt: string,
       updatedAt: string,
-      eventDateTimeId?: string | null,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2427,25 +2198,16 @@ export type GetLocationQueryVariables = {
 export type GetLocationQuery = {
   getLocation?:  {
     __typename: "Location",
+    id: string,
     country?: string | null,
     province?: string | null,
     city?: string | null,
     postalCode?: string | null,
     address?: string | null,
-    coordinates?:  {
-      __typename: "ModelCoordinatesConnection",
-      items:  Array< {
-        __typename: "Coordinates",
-        longitude: string,
-        latitude: string,
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-        locationCoordinatesId?: string | null,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    longitude: string,
+    latitude: string,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -2483,13 +2245,9 @@ export type GetLocationQuery = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventLocationId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -2504,128 +2262,36 @@ export type ListLocationsQuery = {
     __typename: "ModelLocationConnection",
     items:  Array< {
       __typename: "Location",
+      id: string,
       country?: string | null,
       province?: string | null,
       city?: string | null,
       postalCode?: string | null,
       address?: string | null,
-      coordinates?:  {
-        __typename: "ModelCoordinatesConnection",
-        nextToken?: string | null,
-      } | null,
-      event?:  {
-        __typename: "Event",
-        id: string,
-        organization: string,
-        userName: string,
-        userId?: string | null,
-        eventName: string,
-        eventPrivacy: string,
-        eventType?: string | null,
-        smallDescription?: string | null,
-        ageLimit?: number | null,
-        ticketInfo?: string | null,
-        image1?: string | null,
-        image2?: string | null,
-        image3?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
-      } | null,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      eventLocationId?: string | null,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetCoordinatesQueryVariables = {
-  id: string,
-};
-
-export type GetCoordinatesQuery = {
-  getCoordinates?:  {
-    __typename: "Coordinates",
-    longitude: string,
-    latitude: string,
-    location?:  {
-      __typename: "Location",
-      country?: string | null,
-      province?: string | null,
-      city?: string | null,
-      postalCode?: string | null,
-      address?: string | null,
-      coordinates?:  {
-        __typename: "ModelCoordinatesConnection",
-        nextToken?: string | null,
-      } | null,
-      event?:  {
-        __typename: "Event",
-        id: string,
-        organization: string,
-        userName: string,
-        userId?: string | null,
-        eventName: string,
-        eventPrivacy: string,
-        eventType?: string | null,
-        smallDescription?: string | null,
-        ageLimit?: number | null,
-        ticketInfo?: string | null,
-        image1?: string | null,
-        image2?: string | null,
-        image3?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
-      } | null,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      eventLocationId?: string | null,
-      owner?: string | null,
-    } | null,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-    locationCoordinatesId?: string | null,
-    owner?: string | null,
-  } | null,
-};
-
-export type ListCoordinatesQueryVariables = {
-  filter?: ModelCoordinatesFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListCoordinatesQuery = {
-  listCoordinates?:  {
-    __typename: "ModelCoordinatesConnection",
-    items:  Array< {
-      __typename: "Coordinates",
       longitude: string,
       latitude: string,
-      location?:  {
-        __typename: "Location",
-        country?: string | null,
-        province?: string | null,
-        city?: string | null,
-        postalCode?: string | null,
-        address?: string | null,
+      userName: string,
+      eventID: string,
+      event?:  {
+        __typename: "Event",
         id: string,
+        organization: string,
+        userName: string,
+        userId?: string | null,
+        eventName: string,
+        eventPrivacy: string,
+        eventType?: string | null,
+        smallDescription?: string | null,
+        ageLimit?: number | null,
+        ticketInfo?: string | null,
+        image1?: string | null,
+        image2?: string | null,
+        image3?: string | null,
         createdAt: string,
         updatedAt: string,
-        eventLocationId?: string | null,
-        owner?: string | null,
       } | null,
-      id: string,
       createdAt: string,
       updatedAt: string,
-      locationCoordinatesId?: string | null,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2638,8 +2304,11 @@ export type GetDescriptionQueryVariables = {
 export type GetDescriptionQuery = {
   getDescription?:  {
     __typename: "Description",
+    id: string,
     aboutEvent?: string | null,
     schedule?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -2677,13 +2346,9 @@ export type GetDescriptionQuery = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDescriptionId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -2698,8 +2363,11 @@ export type ListDescriptionsQuery = {
     __typename: "ModelDescriptionConnection",
     items:  Array< {
       __typename: "Description",
+      id: string,
       aboutEvent?: string | null,
       schedule?: string | null,
+      userName: string,
+      eventID: string,
       event?:  {
         __typename: "Event",
         id: string,
@@ -2717,13 +2385,9 @@ export type ListDescriptionsQuery = {
         image3?: string | null,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
-      id: string,
       createdAt: string,
       updatedAt: string,
-      eventDescriptionId?: string | null,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2736,6 +2400,7 @@ export type GetContactQueryVariables = {
 export type GetContactQuery = {
   getContact?:  {
     __typename: "Contact",
+    id: string,
     phone?: string | null,
     email?: string | null,
     website?: string | null,
@@ -2744,6 +2409,8 @@ export type GetContactQuery = {
     snapchat?: string | null,
     tiktok?: string | null,
     youtube?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -2781,13 +2448,9 @@ export type GetContactQuery = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventContactId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -2802,6 +2465,7 @@ export type ListContactsQuery = {
     __typename: "ModelContactConnection",
     items:  Array< {
       __typename: "Contact",
+      id: string,
       phone?: string | null,
       email?: string | null,
       website?: string | null,
@@ -2810,6 +2474,8 @@ export type ListContactsQuery = {
       snapchat?: string | null,
       tiktok?: string | null,
       youtube?: string | null,
+      userName: string,
+      eventID: string,
       event?:  {
         __typename: "Event",
         id: string,
@@ -2827,13 +2493,9 @@ export type ListContactsQuery = {
         image3?: string | null,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
-      id: string,
       createdAt: string,
       updatedAt: string,
-      eventContactId?: string | null,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2846,6 +2508,7 @@ export type GetSpecialAccommodationQueryVariables = {
 export type GetSpecialAccommodationQuery = {
   getSpecialAccommodation?:  {
     __typename: "SpecialAccommodation",
+    id: string,
     wheelchairAccessibility?: string | null,
     signLanguageInterpretation?: string | null,
     closedCaptioning?: string | null,
@@ -2855,6 +2518,8 @@ export type GetSpecialAccommodationQuery = {
     accessibleSeating?: string | null,
     serviceAnimalAccommodation?: string | null,
     sensoryAccommodations?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -2892,13 +2557,9 @@ export type GetSpecialAccommodationQuery = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventSpecialAccommodationId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -2913,6 +2574,7 @@ export type ListSpecialAccommodationsQuery = {
     __typename: "ModelSpecialAccommodationConnection",
     items:  Array< {
       __typename: "SpecialAccommodation",
+      id: string,
       wheelchairAccessibility?: string | null,
       signLanguageInterpretation?: string | null,
       closedCaptioning?: string | null,
@@ -2922,6 +2584,8 @@ export type ListSpecialAccommodationsQuery = {
       accessibleSeating?: string | null,
       serviceAnimalAccommodation?: string | null,
       sensoryAccommodations?: string | null,
+      userName: string,
+      eventID: string,
       event?:  {
         __typename: "Event",
         id: string,
@@ -2939,13 +2603,9 @@ export type ListSpecialAccommodationsQuery = {
         image3?: string | null,
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
       } | null,
-      id: string,
       createdAt: string,
       updatedAt: string,
-      eventSpecialAccommodationId?: string | null,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2953,7 +2613,7 @@ export type ListSpecialAccommodationsQuery = {
 
 export type OnCreateEventSubscriptionVariables = {
   filter?: ModelSubscriptionEventFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnCreateEventSubscription = {
@@ -2973,14 +2633,14 @@ export type OnCreateEventSubscription = {
       __typename: "ModelDateTimeConnection",
       items:  Array< {
         __typename: "DateTime",
+        id: string,
         date: string,
         startTime?: string | null,
         endTime?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDateTimeId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2988,16 +2648,18 @@ export type OnCreateEventSubscription = {
       __typename: "ModelLocationConnection",
       items:  Array< {
         __typename: "Location",
+        id: string,
         country?: string | null,
         province?: string | null,
         city?: string | null,
         postalCode?: string | null,
         address?: string | null,
-        id: string,
+        longitude: string,
+        latitude: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventLocationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3005,13 +2667,13 @@ export type OnCreateEventSubscription = {
       __typename: "ModelDescriptionConnection",
       items:  Array< {
         __typename: "Description",
+        id: string,
         aboutEvent?: string | null,
         schedule?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDescriptionId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3019,6 +2681,7 @@ export type OnCreateEventSubscription = {
       __typename: "ModelContactConnection",
       items:  Array< {
         __typename: "Contact",
+        id: string,
         phone?: string | null,
         email?: string | null,
         website?: string | null,
@@ -3027,11 +2690,10 @@ export type OnCreateEventSubscription = {
         snapchat?: string | null,
         tiktok?: string | null,
         youtube?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventContactId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3039,6 +2701,7 @@ export type OnCreateEventSubscription = {
       __typename: "ModelSpecialAccommodationConnection",
       items:  Array< {
         __typename: "SpecialAccommodation",
+        id: string,
         wheelchairAccessibility?: string | null,
         signLanguageInterpretation?: string | null,
         closedCaptioning?: string | null,
@@ -3048,11 +2711,10 @@ export type OnCreateEventSubscription = {
         accessibleSeating?: string | null,
         serviceAnimalAccommodation?: string | null,
         sensoryAccommodations?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventSpecialAccommodationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3061,13 +2723,12 @@ export type OnCreateEventSubscription = {
     image3?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateEventSubscriptionVariables = {
   filter?: ModelSubscriptionEventFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnUpdateEventSubscription = {
@@ -3087,14 +2748,14 @@ export type OnUpdateEventSubscription = {
       __typename: "ModelDateTimeConnection",
       items:  Array< {
         __typename: "DateTime",
+        id: string,
         date: string,
         startTime?: string | null,
         endTime?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDateTimeId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3102,16 +2763,18 @@ export type OnUpdateEventSubscription = {
       __typename: "ModelLocationConnection",
       items:  Array< {
         __typename: "Location",
+        id: string,
         country?: string | null,
         province?: string | null,
         city?: string | null,
         postalCode?: string | null,
         address?: string | null,
-        id: string,
+        longitude: string,
+        latitude: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventLocationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3119,13 +2782,13 @@ export type OnUpdateEventSubscription = {
       __typename: "ModelDescriptionConnection",
       items:  Array< {
         __typename: "Description",
+        id: string,
         aboutEvent?: string | null,
         schedule?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDescriptionId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3133,6 +2796,7 @@ export type OnUpdateEventSubscription = {
       __typename: "ModelContactConnection",
       items:  Array< {
         __typename: "Contact",
+        id: string,
         phone?: string | null,
         email?: string | null,
         website?: string | null,
@@ -3141,11 +2805,10 @@ export type OnUpdateEventSubscription = {
         snapchat?: string | null,
         tiktok?: string | null,
         youtube?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventContactId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3153,6 +2816,7 @@ export type OnUpdateEventSubscription = {
       __typename: "ModelSpecialAccommodationConnection",
       items:  Array< {
         __typename: "SpecialAccommodation",
+        id: string,
         wheelchairAccessibility?: string | null,
         signLanguageInterpretation?: string | null,
         closedCaptioning?: string | null,
@@ -3162,11 +2826,10 @@ export type OnUpdateEventSubscription = {
         accessibleSeating?: string | null,
         serviceAnimalAccommodation?: string | null,
         sensoryAccommodations?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventSpecialAccommodationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3175,13 +2838,12 @@ export type OnUpdateEventSubscription = {
     image3?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteEventSubscriptionVariables = {
   filter?: ModelSubscriptionEventFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnDeleteEventSubscription = {
@@ -3201,14 +2863,14 @@ export type OnDeleteEventSubscription = {
       __typename: "ModelDateTimeConnection",
       items:  Array< {
         __typename: "DateTime",
+        id: string,
         date: string,
         startTime?: string | null,
         endTime?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDateTimeId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3216,16 +2878,18 @@ export type OnDeleteEventSubscription = {
       __typename: "ModelLocationConnection",
       items:  Array< {
         __typename: "Location",
+        id: string,
         country?: string | null,
         province?: string | null,
         city?: string | null,
         postalCode?: string | null,
         address?: string | null,
-        id: string,
+        longitude: string,
+        latitude: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventLocationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3233,13 +2897,13 @@ export type OnDeleteEventSubscription = {
       __typename: "ModelDescriptionConnection",
       items:  Array< {
         __typename: "Description",
+        id: string,
         aboutEvent?: string | null,
         schedule?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventDescriptionId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3247,6 +2911,7 @@ export type OnDeleteEventSubscription = {
       __typename: "ModelContactConnection",
       items:  Array< {
         __typename: "Contact",
+        id: string,
         phone?: string | null,
         email?: string | null,
         website?: string | null,
@@ -3255,11 +2920,10 @@ export type OnDeleteEventSubscription = {
         snapchat?: string | null,
         tiktok?: string | null,
         youtube?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventContactId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3267,6 +2931,7 @@ export type OnDeleteEventSubscription = {
       __typename: "ModelSpecialAccommodationConnection",
       items:  Array< {
         __typename: "SpecialAccommodation",
+        id: string,
         wheelchairAccessibility?: string | null,
         signLanguageInterpretation?: string | null,
         closedCaptioning?: string | null,
@@ -3276,11 +2941,10 @@ export type OnDeleteEventSubscription = {
         accessibleSeating?: string | null,
         serviceAnimalAccommodation?: string | null,
         sensoryAccommodations?: string | null,
-        id: string,
+        userName: string,
+        eventID: string,
         createdAt: string,
         updatedAt: string,
-        eventSpecialAccommodationId?: string | null,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3289,21 +2953,23 @@ export type OnDeleteEventSubscription = {
     image3?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnCreateDateTimeSubscriptionVariables = {
   filter?: ModelSubscriptionDateTimeFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnCreateDateTimeSubscription = {
   onCreateDateTime?:  {
     __typename: "DateTime",
+    id: string,
     date: string,
     startTime?: string | null,
     endTime?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -3341,27 +3007,26 @@ export type OnCreateDateTimeSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDateTimeId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateDateTimeSubscriptionVariables = {
   filter?: ModelSubscriptionDateTimeFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnUpdateDateTimeSubscription = {
   onUpdateDateTime?:  {
     __typename: "DateTime",
+    id: string,
     date: string,
     startTime?: string | null,
     endTime?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -3399,27 +3064,26 @@ export type OnUpdateDateTimeSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDateTimeId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteDateTimeSubscriptionVariables = {
   filter?: ModelSubscriptionDateTimeFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnDeleteDateTimeSubscription = {
   onDeleteDateTime?:  {
     __typename: "DateTime",
+    id: string,
     date: string,
     startTime?: string | null,
     endTime?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -3457,43 +3121,30 @@ export type OnDeleteDateTimeSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDateTimeId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnCreateLocationSubscriptionVariables = {
   filter?: ModelSubscriptionLocationFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnCreateLocationSubscription = {
   onCreateLocation?:  {
     __typename: "Location",
+    id: string,
     country?: string | null,
     province?: string | null,
     city?: string | null,
     postalCode?: string | null,
     address?: string | null,
-    coordinates?:  {
-      __typename: "ModelCoordinatesConnection",
-      items:  Array< {
-        __typename: "Coordinates",
-        longitude: string,
-        latitude: string,
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-        locationCoordinatesId?: string | null,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    longitude: string,
+    latitude: string,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -3531,43 +3182,30 @@ export type OnCreateLocationSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventLocationId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateLocationSubscriptionVariables = {
   filter?: ModelSubscriptionLocationFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnUpdateLocationSubscription = {
   onUpdateLocation?:  {
     __typename: "Location",
+    id: string,
     country?: string | null,
     province?: string | null,
     city?: string | null,
     postalCode?: string | null,
     address?: string | null,
-    coordinates?:  {
-      __typename: "ModelCoordinatesConnection",
-      items:  Array< {
-        __typename: "Coordinates",
-        longitude: string,
-        latitude: string,
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-        locationCoordinatesId?: string | null,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    longitude: string,
+    latitude: string,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -3605,43 +3243,30 @@ export type OnUpdateLocationSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventLocationId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteLocationSubscriptionVariables = {
   filter?: ModelSubscriptionLocationFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnDeleteLocationSubscription = {
   onDeleteLocation?:  {
     __typename: "Location",
+    id: string,
     country?: string | null,
     province?: string | null,
     city?: string | null,
     postalCode?: string | null,
     address?: string | null,
-    coordinates?:  {
-      __typename: "ModelCoordinatesConnection",
-      items:  Array< {
-        __typename: "Coordinates",
-        longitude: string,
-        latitude: string,
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-        locationCoordinatesId?: string | null,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
+    longitude: string,
+    latitude: string,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -3679,188 +3304,25 @@ export type OnDeleteLocationSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventLocationId?: string | null,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnCreateCoordinatesSubscriptionVariables = {
-  filter?: ModelSubscriptionCoordinatesFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnCreateCoordinatesSubscription = {
-  onCreateCoordinates?:  {
-    __typename: "Coordinates",
-    longitude: string,
-    latitude: string,
-    location?:  {
-      __typename: "Location",
-      country?: string | null,
-      province?: string | null,
-      city?: string | null,
-      postalCode?: string | null,
-      address?: string | null,
-      coordinates?:  {
-        __typename: "ModelCoordinatesConnection",
-        nextToken?: string | null,
-      } | null,
-      event?:  {
-        __typename: "Event",
-        id: string,
-        organization: string,
-        userName: string,
-        userId?: string | null,
-        eventName: string,
-        eventPrivacy: string,
-        eventType?: string | null,
-        smallDescription?: string | null,
-        ageLimit?: number | null,
-        ticketInfo?: string | null,
-        image1?: string | null,
-        image2?: string | null,
-        image3?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
-      } | null,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      eventLocationId?: string | null,
-      owner?: string | null,
-    } | null,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-    locationCoordinatesId?: string | null,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnUpdateCoordinatesSubscriptionVariables = {
-  filter?: ModelSubscriptionCoordinatesFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnUpdateCoordinatesSubscription = {
-  onUpdateCoordinates?:  {
-    __typename: "Coordinates",
-    longitude: string,
-    latitude: string,
-    location?:  {
-      __typename: "Location",
-      country?: string | null,
-      province?: string | null,
-      city?: string | null,
-      postalCode?: string | null,
-      address?: string | null,
-      coordinates?:  {
-        __typename: "ModelCoordinatesConnection",
-        nextToken?: string | null,
-      } | null,
-      event?:  {
-        __typename: "Event",
-        id: string,
-        organization: string,
-        userName: string,
-        userId?: string | null,
-        eventName: string,
-        eventPrivacy: string,
-        eventType?: string | null,
-        smallDescription?: string | null,
-        ageLimit?: number | null,
-        ticketInfo?: string | null,
-        image1?: string | null,
-        image2?: string | null,
-        image3?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
-      } | null,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      eventLocationId?: string | null,
-      owner?: string | null,
-    } | null,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-    locationCoordinatesId?: string | null,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnDeleteCoordinatesSubscriptionVariables = {
-  filter?: ModelSubscriptionCoordinatesFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnDeleteCoordinatesSubscription = {
-  onDeleteCoordinates?:  {
-    __typename: "Coordinates",
-    longitude: string,
-    latitude: string,
-    location?:  {
-      __typename: "Location",
-      country?: string | null,
-      province?: string | null,
-      city?: string | null,
-      postalCode?: string | null,
-      address?: string | null,
-      coordinates?:  {
-        __typename: "ModelCoordinatesConnection",
-        nextToken?: string | null,
-      } | null,
-      event?:  {
-        __typename: "Event",
-        id: string,
-        organization: string,
-        userName: string,
-        userId?: string | null,
-        eventName: string,
-        eventPrivacy: string,
-        eventType?: string | null,
-        smallDescription?: string | null,
-        ageLimit?: number | null,
-        ticketInfo?: string | null,
-        image1?: string | null,
-        image2?: string | null,
-        image3?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
-      } | null,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      eventLocationId?: string | null,
-      owner?: string | null,
-    } | null,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-    locationCoordinatesId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnCreateDescriptionSubscriptionVariables = {
   filter?: ModelSubscriptionDescriptionFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnCreateDescriptionSubscription = {
   onCreateDescription?:  {
     __typename: "Description",
+    id: string,
     aboutEvent?: string | null,
     schedule?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -3898,26 +3360,25 @@ export type OnCreateDescriptionSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDescriptionId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateDescriptionSubscriptionVariables = {
   filter?: ModelSubscriptionDescriptionFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnUpdateDescriptionSubscription = {
   onUpdateDescription?:  {
     __typename: "Description",
+    id: string,
     aboutEvent?: string | null,
     schedule?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -3955,26 +3416,25 @@ export type OnUpdateDescriptionSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDescriptionId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteDescriptionSubscriptionVariables = {
   filter?: ModelSubscriptionDescriptionFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnDeleteDescriptionSubscription = {
   onDeleteDescription?:  {
     __typename: "Description",
+    id: string,
     aboutEvent?: string | null,
     schedule?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -4012,24 +3472,21 @@ export type OnDeleteDescriptionSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventDescriptionId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnCreateContactSubscriptionVariables = {
   filter?: ModelSubscriptionContactFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnCreateContactSubscription = {
   onCreateContact?:  {
     __typename: "Contact",
+    id: string,
     phone?: string | null,
     email?: string | null,
     website?: string | null,
@@ -4038,6 +3495,8 @@ export type OnCreateContactSubscription = {
     snapchat?: string | null,
     tiktok?: string | null,
     youtube?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -4075,24 +3534,21 @@ export type OnCreateContactSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventContactId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateContactSubscriptionVariables = {
   filter?: ModelSubscriptionContactFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnUpdateContactSubscription = {
   onUpdateContact?:  {
     __typename: "Contact",
+    id: string,
     phone?: string | null,
     email?: string | null,
     website?: string | null,
@@ -4101,6 +3557,8 @@ export type OnUpdateContactSubscription = {
     snapchat?: string | null,
     tiktok?: string | null,
     youtube?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -4138,24 +3596,21 @@ export type OnUpdateContactSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventContactId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteContactSubscriptionVariables = {
   filter?: ModelSubscriptionContactFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnDeleteContactSubscription = {
   onDeleteContact?:  {
     __typename: "Contact",
+    id: string,
     phone?: string | null,
     email?: string | null,
     website?: string | null,
@@ -4164,6 +3619,8 @@ export type OnDeleteContactSubscription = {
     snapchat?: string | null,
     tiktok?: string | null,
     youtube?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -4201,24 +3658,21 @@ export type OnDeleteContactSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventContactId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnCreateSpecialAccommodationSubscriptionVariables = {
   filter?: ModelSubscriptionSpecialAccommodationFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnCreateSpecialAccommodationSubscription = {
   onCreateSpecialAccommodation?:  {
     __typename: "SpecialAccommodation",
+    id: string,
     wheelchairAccessibility?: string | null,
     signLanguageInterpretation?: string | null,
     closedCaptioning?: string | null,
@@ -4228,6 +3682,8 @@ export type OnCreateSpecialAccommodationSubscription = {
     accessibleSeating?: string | null,
     serviceAnimalAccommodation?: string | null,
     sensoryAccommodations?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -4265,24 +3721,21 @@ export type OnCreateSpecialAccommodationSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventSpecialAccommodationId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateSpecialAccommodationSubscriptionVariables = {
   filter?: ModelSubscriptionSpecialAccommodationFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnUpdateSpecialAccommodationSubscription = {
   onUpdateSpecialAccommodation?:  {
     __typename: "SpecialAccommodation",
+    id: string,
     wheelchairAccessibility?: string | null,
     signLanguageInterpretation?: string | null,
     closedCaptioning?: string | null,
@@ -4292,6 +3745,8 @@ export type OnUpdateSpecialAccommodationSubscription = {
     accessibleSeating?: string | null,
     serviceAnimalAccommodation?: string | null,
     sensoryAccommodations?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -4329,24 +3784,21 @@ export type OnUpdateSpecialAccommodationSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventSpecialAccommodationId?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteSpecialAccommodationSubscriptionVariables = {
   filter?: ModelSubscriptionSpecialAccommodationFilterInput | null,
-  owner?: string | null,
+  userName?: string | null,
 };
 
 export type OnDeleteSpecialAccommodationSubscription = {
   onDeleteSpecialAccommodation?:  {
     __typename: "SpecialAccommodation",
+    id: string,
     wheelchairAccessibility?: string | null,
     signLanguageInterpretation?: string | null,
     closedCaptioning?: string | null,
@@ -4356,6 +3808,8 @@ export type OnDeleteSpecialAccommodationSubscription = {
     accessibleSeating?: string | null,
     serviceAnimalAccommodation?: string | null,
     sensoryAccommodations?: string | null,
+    userName: string,
+    eventID: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -4393,12 +3847,8 @@ export type OnDeleteSpecialAccommodationSubscription = {
       image3?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
-    eventSpecialAccommodationId?: string | null,
-    owner?: string | null,
   } | null,
 };

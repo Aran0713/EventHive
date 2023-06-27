@@ -17,6 +17,9 @@
       },
       "api": {
         "eventhive": {}
+      },
+      "storage": {
+        "s34220effa": {}
       }
     }
   }

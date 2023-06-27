@@ -20,46 +20,49 @@ export const createEvent = /* GraphQL */ `
       ticketInfo
       dateTime {
         items {
+          id
           date
           startTime
           endTime
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDateTimeId
-          owner
         }
         nextToken
       }
       location {
         items {
+          id
           country
           province
           city
           postalCode
           address
-          id
+          longitude
+          latitude
+          userName
+          eventID
           createdAt
           updatedAt
-          eventLocationId
-          owner
         }
         nextToken
       }
       description {
         items {
+          id
           aboutEvent
           schedule
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDescriptionId
-          owner
         }
         nextToken
       }
       contact {
         items {
+          id
           phone
           email
           website
@@ -68,16 +71,16 @@ export const createEvent = /* GraphQL */ `
           snapchat
           tiktok
           youtube
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventContactId
-          owner
         }
         nextToken
       }
       specialAccommodation {
         items {
+          id
           wheelchairAccessibility
           signLanguageInterpretation
           closedCaptioning
@@ -87,11 +90,10 @@ export const createEvent = /* GraphQL */ `
           accessibleSeating
           serviceAnimalAccommodation
           sensoryAccommodations
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventSpecialAccommodationId
-          owner
         }
         nextToken
       }
@@ -100,7 +102,6 @@ export const createEvent = /* GraphQL */ `
       image3
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -122,46 +123,49 @@ export const updateEvent = /* GraphQL */ `
       ticketInfo
       dateTime {
         items {
+          id
           date
           startTime
           endTime
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDateTimeId
-          owner
         }
         nextToken
       }
       location {
         items {
+          id
           country
           province
           city
           postalCode
           address
-          id
+          longitude
+          latitude
+          userName
+          eventID
           createdAt
           updatedAt
-          eventLocationId
-          owner
         }
         nextToken
       }
       description {
         items {
+          id
           aboutEvent
           schedule
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDescriptionId
-          owner
         }
         nextToken
       }
       contact {
         items {
+          id
           phone
           email
           website
@@ -170,16 +174,16 @@ export const updateEvent = /* GraphQL */ `
           snapchat
           tiktok
           youtube
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventContactId
-          owner
         }
         nextToken
       }
       specialAccommodation {
         items {
+          id
           wheelchairAccessibility
           signLanguageInterpretation
           closedCaptioning
@@ -189,11 +193,10 @@ export const updateEvent = /* GraphQL */ `
           accessibleSeating
           serviceAnimalAccommodation
           sensoryAccommodations
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventSpecialAccommodationId
-          owner
         }
         nextToken
       }
@@ -202,7 +205,6 @@ export const updateEvent = /* GraphQL */ `
       image3
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -224,46 +226,49 @@ export const deleteEvent = /* GraphQL */ `
       ticketInfo
       dateTime {
         items {
+          id
           date
           startTime
           endTime
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDateTimeId
-          owner
         }
         nextToken
       }
       location {
         items {
+          id
           country
           province
           city
           postalCode
           address
-          id
+          longitude
+          latitude
+          userName
+          eventID
           createdAt
           updatedAt
-          eventLocationId
-          owner
         }
         nextToken
       }
       description {
         items {
+          id
           aboutEvent
           schedule
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventDescriptionId
-          owner
         }
         nextToken
       }
       contact {
         items {
+          id
           phone
           email
           website
@@ -272,16 +277,16 @@ export const deleteEvent = /* GraphQL */ `
           snapchat
           tiktok
           youtube
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventContactId
-          owner
         }
         nextToken
       }
       specialAccommodation {
         items {
+          id
           wheelchairAccessibility
           signLanguageInterpretation
           closedCaptioning
@@ -291,11 +296,10 @@ export const deleteEvent = /* GraphQL */ `
           accessibleSeating
           serviceAnimalAccommodation
           sensoryAccommodations
-          id
+          userName
+          eventID
           createdAt
           updatedAt
-          eventSpecialAccommodationId
-          owner
         }
         nextToken
       }
@@ -304,7 +308,6 @@ export const deleteEvent = /* GraphQL */ `
       image3
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -314,9 +317,12 @@ export const createDateTime = /* GraphQL */ `
     $condition: ModelDateTimeConditionInput
   ) {
     createDateTime(input: $input, condition: $condition) {
+      id
       date
       startTime
       endTime
+      userName
+      eventID
       event {
         id
         organization
@@ -348,13 +354,9 @@ export const createDateTime = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDateTimeId
-      owner
     }
   }
 `;
@@ -364,9 +366,12 @@ export const updateDateTime = /* GraphQL */ `
     $condition: ModelDateTimeConditionInput
   ) {
     updateDateTime(input: $input, condition: $condition) {
+      id
       date
       startTime
       endTime
+      userName
+      eventID
       event {
         id
         organization
@@ -398,13 +403,9 @@ export const updateDateTime = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDateTimeId
-      owner
     }
   }
 `;
@@ -414,9 +415,12 @@ export const deleteDateTime = /* GraphQL */ `
     $condition: ModelDateTimeConditionInput
   ) {
     deleteDateTime(input: $input, condition: $condition) {
+      id
       date
       startTime
       endTime
+      userName
+      eventID
       event {
         id
         organization
@@ -448,13 +452,9 @@ export const deleteDateTime = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDateTimeId
-      owner
     }
   }
 `;
@@ -464,23 +464,16 @@ export const createLocation = /* GraphQL */ `
     $condition: ModelLocationConditionInput
   ) {
     createLocation(input: $input, condition: $condition) {
+      id
       country
       province
       city
       postalCode
       address
-      coordinates {
-        items {
-          longitude
-          latitude
-          id
-          createdAt
-          updatedAt
-          locationCoordinatesId
-          owner
-        }
-        nextToken
-      }
+      longitude
+      latitude
+      userName
+      eventID
       event {
         id
         organization
@@ -512,13 +505,9 @@ export const createLocation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventLocationId
-      owner
     }
   }
 `;
@@ -528,23 +517,16 @@ export const updateLocation = /* GraphQL */ `
     $condition: ModelLocationConditionInput
   ) {
     updateLocation(input: $input, condition: $condition) {
+      id
       country
       province
       city
       postalCode
       address
-      coordinates {
-        items {
-          longitude
-          latitude
-          id
-          createdAt
-          updatedAt
-          locationCoordinatesId
-          owner
-        }
-        nextToken
-      }
+      longitude
+      latitude
+      userName
+      eventID
       event {
         id
         organization
@@ -576,13 +558,9 @@ export const updateLocation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventLocationId
-      owner
     }
   }
 `;
@@ -592,23 +570,16 @@ export const deleteLocation = /* GraphQL */ `
     $condition: ModelLocationConditionInput
   ) {
     deleteLocation(input: $input, condition: $condition) {
+      id
       country
       province
       city
       postalCode
       address
-      coordinates {
-        items {
-          longitude
-          latitude
-          id
-          createdAt
-          updatedAt
-          locationCoordinatesId
-          owner
-        }
-        nextToken
-      }
+      longitude
+      latitude
+      userName
+      eventID
       event {
         id
         organization
@@ -640,160 +611,9 @@ export const deleteLocation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventLocationId
-      owner
-    }
-  }
-`;
-export const createCoordinates = /* GraphQL */ `
-  mutation CreateCoordinates(
-    $input: CreateCoordinatesInput!
-    $condition: ModelCoordinatesConditionInput
-  ) {
-    createCoordinates(input: $input, condition: $condition) {
-      longitude
-      latitude
-      location {
-        country
-        province
-        city
-        postalCode
-        address
-        coordinates {
-          nextToken
-        }
-        event {
-          id
-          organization
-          userName
-          userId
-          eventName
-          eventPrivacy
-          eventType
-          smallDescription
-          ageLimit
-          ticketInfo
-          image1
-          image2
-          image3
-          createdAt
-          updatedAt
-          owner
-        }
-        id
-        createdAt
-        updatedAt
-        eventLocationId
-        owner
-      }
-      id
-      createdAt
-      updatedAt
-      locationCoordinatesId
-      owner
-    }
-  }
-`;
-export const updateCoordinates = /* GraphQL */ `
-  mutation UpdateCoordinates(
-    $input: UpdateCoordinatesInput!
-    $condition: ModelCoordinatesConditionInput
-  ) {
-    updateCoordinates(input: $input, condition: $condition) {
-      longitude
-      latitude
-      location {
-        country
-        province
-        city
-        postalCode
-        address
-        coordinates {
-          nextToken
-        }
-        event {
-          id
-          organization
-          userName
-          userId
-          eventName
-          eventPrivacy
-          eventType
-          smallDescription
-          ageLimit
-          ticketInfo
-          image1
-          image2
-          image3
-          createdAt
-          updatedAt
-          owner
-        }
-        id
-        createdAt
-        updatedAt
-        eventLocationId
-        owner
-      }
-      id
-      createdAt
-      updatedAt
-      locationCoordinatesId
-      owner
-    }
-  }
-`;
-export const deleteCoordinates = /* GraphQL */ `
-  mutation DeleteCoordinates(
-    $input: DeleteCoordinatesInput!
-    $condition: ModelCoordinatesConditionInput
-  ) {
-    deleteCoordinates(input: $input, condition: $condition) {
-      longitude
-      latitude
-      location {
-        country
-        province
-        city
-        postalCode
-        address
-        coordinates {
-          nextToken
-        }
-        event {
-          id
-          organization
-          userName
-          userId
-          eventName
-          eventPrivacy
-          eventType
-          smallDescription
-          ageLimit
-          ticketInfo
-          image1
-          image2
-          image3
-          createdAt
-          updatedAt
-          owner
-        }
-        id
-        createdAt
-        updatedAt
-        eventLocationId
-        owner
-      }
-      id
-      createdAt
-      updatedAt
-      locationCoordinatesId
-      owner
     }
   }
 `;
@@ -803,8 +623,11 @@ export const createDescription = /* GraphQL */ `
     $condition: ModelDescriptionConditionInput
   ) {
     createDescription(input: $input, condition: $condition) {
+      id
       aboutEvent
       schedule
+      userName
+      eventID
       event {
         id
         organization
@@ -836,13 +659,9 @@ export const createDescription = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDescriptionId
-      owner
     }
   }
 `;
@@ -852,8 +671,11 @@ export const updateDescription = /* GraphQL */ `
     $condition: ModelDescriptionConditionInput
   ) {
     updateDescription(input: $input, condition: $condition) {
+      id
       aboutEvent
       schedule
+      userName
+      eventID
       event {
         id
         organization
@@ -885,13 +707,9 @@ export const updateDescription = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDescriptionId
-      owner
     }
   }
 `;
@@ -901,8 +719,11 @@ export const deleteDescription = /* GraphQL */ `
     $condition: ModelDescriptionConditionInput
   ) {
     deleteDescription(input: $input, condition: $condition) {
+      id
       aboutEvent
       schedule
+      userName
+      eventID
       event {
         id
         organization
@@ -934,13 +755,9 @@ export const deleteDescription = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventDescriptionId
-      owner
     }
   }
 `;
@@ -950,6 +767,7 @@ export const createContact = /* GraphQL */ `
     $condition: ModelContactConditionInput
   ) {
     createContact(input: $input, condition: $condition) {
+      id
       phone
       email
       website
@@ -958,6 +776,8 @@ export const createContact = /* GraphQL */ `
       snapchat
       tiktok
       youtube
+      userName
+      eventID
       event {
         id
         organization
@@ -989,13 +809,9 @@ export const createContact = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventContactId
-      owner
     }
   }
 `;
@@ -1005,6 +821,7 @@ export const updateContact = /* GraphQL */ `
     $condition: ModelContactConditionInput
   ) {
     updateContact(input: $input, condition: $condition) {
+      id
       phone
       email
       website
@@ -1013,6 +830,8 @@ export const updateContact = /* GraphQL */ `
       snapchat
       tiktok
       youtube
+      userName
+      eventID
       event {
         id
         organization
@@ -1044,13 +863,9 @@ export const updateContact = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventContactId
-      owner
     }
   }
 `;
@@ -1060,6 +875,7 @@ export const deleteContact = /* GraphQL */ `
     $condition: ModelContactConditionInput
   ) {
     deleteContact(input: $input, condition: $condition) {
+      id
       phone
       email
       website
@@ -1068,6 +884,8 @@ export const deleteContact = /* GraphQL */ `
       snapchat
       tiktok
       youtube
+      userName
+      eventID
       event {
         id
         organization
@@ -1099,13 +917,9 @@ export const deleteContact = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventContactId
-      owner
     }
   }
 `;
@@ -1115,6 +929,7 @@ export const createSpecialAccommodation = /* GraphQL */ `
     $condition: ModelSpecialAccommodationConditionInput
   ) {
     createSpecialAccommodation(input: $input, condition: $condition) {
+      id
       wheelchairAccessibility
       signLanguageInterpretation
       closedCaptioning
@@ -1124,6 +939,8 @@ export const createSpecialAccommodation = /* GraphQL */ `
       accessibleSeating
       serviceAnimalAccommodation
       sensoryAccommodations
+      userName
+      eventID
       event {
         id
         organization
@@ -1155,13 +972,9 @@ export const createSpecialAccommodation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventSpecialAccommodationId
-      owner
     }
   }
 `;
@@ -1171,6 +984,7 @@ export const updateSpecialAccommodation = /* GraphQL */ `
     $condition: ModelSpecialAccommodationConditionInput
   ) {
     updateSpecialAccommodation(input: $input, condition: $condition) {
+      id
       wheelchairAccessibility
       signLanguageInterpretation
       closedCaptioning
@@ -1180,6 +994,8 @@ export const updateSpecialAccommodation = /* GraphQL */ `
       accessibleSeating
       serviceAnimalAccommodation
       sensoryAccommodations
+      userName
+      eventID
       event {
         id
         organization
@@ -1211,13 +1027,9 @@ export const updateSpecialAccommodation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventSpecialAccommodationId
-      owner
     }
   }
 `;
@@ -1227,6 +1039,7 @@ export const deleteSpecialAccommodation = /* GraphQL */ `
     $condition: ModelSpecialAccommodationConditionInput
   ) {
     deleteSpecialAccommodation(input: $input, condition: $condition) {
+      id
       wheelchairAccessibility
       signLanguageInterpretation
       closedCaptioning
@@ -1236,6 +1049,8 @@ export const deleteSpecialAccommodation = /* GraphQL */ `
       accessibleSeating
       serviceAnimalAccommodation
       sensoryAccommodations
+      userName
+      eventID
       event {
         id
         organization
@@ -1267,13 +1082,9 @@ export const deleteSpecialAccommodation = /* GraphQL */ `
         image3
         createdAt
         updatedAt
-        owner
       }
-      id
       createdAt
       updatedAt
-      eventSpecialAccommodationId
-      owner
     }
   }
 `;

@@ -1,31 +1,41 @@
 import React, { useState } from 'react';
-import { Button, SafeAreaView, StatusBar, Text, View, StyleSheet, Platform, ScrollView, TextInput, TouchableOpacity, KeyboardAvoidingView,  } from 'react-native';
+import { Button, SafeAreaView, StatusBar, Text, View, StyleSheet, Platform, ScrollView, TextInput, TouchableOpacity, KeyboardAvoidingView, Image, } from 'react-native';
 import { Link } from 'react-router-native';
 import { CheckBox } from 'react-native-elements';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons, MaterialIcons  } from '@expo/vector-icons';
 import {GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { useNavigate } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import { Picker } from "@react-native-picker/picker";
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 // import DateTimePickerModal from 'react-native-modal-datetime-picker';
 // import { format } from 'date-fns';
 import { Auth, API, graphqlOperation } from 'aws-amplify'
-import { createEvent } from '../graphql/mutations';
+import { createEvent, createDateTime, createLocation, createDescription, createContact, createSpecialAccommodation } from '../graphql/mutations';
+import { GraphQLResult } from '@aws-amplify/api-graphql';
+import { Storage } from 'aws-amplify';
+import * as ImagePicker from 'expo-image-picker';
+import { color } from 'react-native-elements/dist/helpers';
+
+
+
+
 
 
 
 const ListEvent = () => {
+
   const navigate = useNavigate();
+
   const backArrowPress =async () => {
       navigate('/');
   }
 
   // Form data
-  const [eventPrivacy, setEventPrivacy] = useState('');
+  const [eventPrivacy, setEventPrivacy] = useState('Public Event');
   const [eventName, setEventName] = useState('');
   const [organization, setOrganization] = useState('');
   const [eventType, setEventType] = useState('');
-  const [ageLimit, setAgeLimit] = useState('');
+  const [ageLimit, setAgeLimit] = useState("");
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -57,6 +67,9 @@ const ListEvent = () => {
   const [accessibleSeating, setAccessibleSeating] = useState(false);
   const [serviceAnimalAccommodation, setServiceAnimalAccommodation] = useState(false);
   const [sensoryAccommodations, setSensoryAccommodations] = useState(false);
+  const [image1, setImage1] = useState<string | null>(null);
+  const [image2, setImage2] = useState<string | null>(null);
+  const [image3, setImage3] = useState<string | null>(null);
 
   // Component rendering
   const [eventPrivacyComponent, setEventPrivacyComponent] = useState(true);
@@ -66,6 +79,7 @@ const ListEvent = () => {
   const [eventDescriptionComponent, setEventDescriptionComponent] = useState(false);
   const [contactComponent, setContactComponent] = useState(false);
   const [specialAccommodationComponent, setSpecialAccommodationComponent] = useState(false);
+  const [imageComponent, setImageComponent] = useState(false);
   
   // Error Handling, required fields
   const [formErrors, setFormErrors] = useState(false);
@@ -74,9 +88,10 @@ const ListEvent = () => {
   const eventPrivacySubmit = () => {
     setEventPrivacyComponent(false);
     setEventDetailsComponent(true);
+    console.log(eventPrivacy)
   }
   const eventDetailsSubmit = () => {
-    if (eventName === '' || organization === '') {
+    if (eventName === '') {
       setFormErrors(true);
     }else{
       setFormErrors(false);
@@ -104,6 +119,10 @@ const ListEvent = () => {
   }
   const eventDescriptionSubmit = () => {
     setEventDescriptionComponent(false);
+    setImageComponent(true);
+  }
+  const imageSubmit = () => { 
+    setImageComponent(false);
     setContactComponent(true);
   }
   const contactSubmit = () => {
@@ -129,134 +148,190 @@ const ListEvent = () => {
 
   // Final submit Button
   const handleSubmit = async () => {
-      // Validation and submission logic
-      if (!eventName || !date || !country || !postalCode) {
-        console.log('Please fill out all required fields');
-      return;
-      }
-
-      const formData = {
-        organization,
-        eventName,
-        eventPrivacy,
-        eventType,
-        smallDescription,
-        ageLimit,
-        ticketInfo,
-        dateTime: {
-          date,
-          startTime,
-          endTime,
-        },
-        location: {
-          country,
-          province,
-          city,
-          postalCode,
-          address,
-          coordinates: {
-          longitude,
-          latitude,
-          },
-        },
-        description: {
-          aboutEvent,
-          schedule
-        },
-        contact: {
-          phone,
-          email,
-          website,
-          ig,
-          twitter,
-          snapchat,
-          tiktok,
-          youtube,
-        },
-        specialAccommodation: {
-          wheelchairAccessibility,
-          signLanguageInterpretation,
-          closedCaptioning,
-          assistiveListeningSystems,
-          brailleMaterials,
-          flexibleCommunicationOptions,
-          accessibleSeating,
-          serviceAnimalAccommodation,
-          sensoryAccommodations,
-        },
-      };
-
-  
+    // Validation and submission logic
+    if (!eventName || !date || !country || !postalCode) {
+      console.log('Please fill out all required fields');
+    return;
+    }
     
+    const formData = {
+      organization,
+      eventName,
+      eventPrivacy,
+      eventType,
+      smallDescription,
+      ageLimit,
+      ticketInfo,
+      dateTime: {
+        date,
+        startTime,
+        endTime,
+      },
+      location: {
+        country,
+        province,
+        city,
+        postalCode,
+        address,
+        coordinates: {
+        longitude,
+        latitude,
+        },
+      },
+      description: {
+        aboutEvent,
+        schedule
+      },
+      contact: {
+        phone,
+        email,
+        website,
+        ig,
+        twitter,
+        snapchat,
+        tiktok,
+        youtube,
+      },
+      specialAccommodation: {
+        wheelchairAccessibility,
+        signLanguageInterpretation,
+        closedCaptioning,
+        assistiveListeningSystems,
+        brailleMaterials,
+        flexibleCommunicationOptions,
+        accessibleSeating,
+        serviceAnimalAccommodation,
+        sensoryAccommodations,
+      },
+    };
+
 
     try {
-
       const user = await Auth.currentAuthenticatedUser(); 
+      const ageLimitNumber = ageLimit === '' ? 0 : Number(ageLimit);
+      const organizationValue = formData.organization === '' ? user.username : formData.organization
 
-      const response = await API.graphql(graphqlOperation(createEvent, {
+      // console.log("User ID: ", user.attributes.sub);
+      console.log("Username: ", user.username);
+      console.log(formData);
+
+      // Create Event
+      const eventResponse = await API.graphql(
+        {
+          query: createEvent,
+          variables: {
+            input: {
+              organization: organizationValue,
+              userName: user.username,
+              userId: user.attributes.sub,
+              eventName: formData.eventName,
+              eventPrivacy: formData.eventPrivacy,
+              eventType: formData.eventType,
+              smallDescription: formData.smallDescription,
+              ageLimit: ageLimitNumber,
+              ticketInfo: formData.ticketInfo,
+            },
+            authMode: "AMAZON_COGNITO_USER_POOLS"
+          }
+        }) as GraphQLResult<any>;
+
+      console.log("Event Response: ", eventResponse);
+      const eventId = eventResponse.data.createEvent.id;
+      console.log("Event Id: ", eventId);
+
+
+      // Create DateTime
+      const dateTimeResponse = await API.graphql(graphqlOperation(createDateTime, {
         input: {
-          organization: formData.organization,
+          date: formData.dateTime.date,
+          startTime: formData.dateTime.startTime,
+          endTime: formData.dateTime.endTime,
           userName: user.username,
-          userId: user.attributes.sub,
-          eventName: formData.eventName,
-          eventPrivacy: formData.eventPrivacy,
-          eventType: formData.eventType,
-          smallDescription: formData.smallDescription,
-          ageLimit: formData.ageLimit,
-          ticketInfo: formData.ticketInfo,
-          dateTime: {
-            date: formData.dateTime.date,
-            startTime: formData.dateTime.startTime,
-            endTime: formData.dateTime.endTime
-          },
-          location: {
-            country: formData.location.country,
-            province: formData.location.province,
-            city: formData.location.city,
-            postalCode: formData.location.postalCode,
-            address: formData.location.address,
-            coordinates: {
-              longitude: formData.location.coordinates.longitude,
-              latitude: formData.location.coordinates.latitude
-            }
-          }, 
-          description: {
-            aboutEvent: formData.description.aboutEvent,
-            schedule: formData.description.schedule
-          },
-          contact: {
-            phone: formData.contact.phone,
-            email: formData.contact.email,
-            website: formData.contact.website,
-            ig: formData.contact.ig,
-            twitter: formData.contact.twitter,
-            snapchat: formData.contact.snapchat,
-            tiktok: formData.contact.tiktok,
-            youtube: formData.contact.youtube
-          },
-          specialAccommodation: {
-            wheelchairAccessibility: formData.specialAccommodation.wheelchairAccessibility,
-            signLanguageInterpretation: formData.specialAccommodation.signLanguageInterpretation,
-            closedCaptioning: formData.specialAccommodation.closedCaptioning,
-            assistiveListeningSystems: formData.specialAccommodation.assistiveListeningSystems,
-            brailleMaterials: formData.specialAccommodation.brailleMaterials,
-            flexibleCommunicationOptions: formData.specialAccommodation.flexibleCommunicationOptions,
-            accessibleSeating: formData.specialAccommodation.accessibleSeating,
-            serviceAnimalAccommodation: formData.specialAccommodation.serviceAnimalAccommodation,
-            sensoryAccommodations: formData.specialAccommodation.sensoryAccommodations
-          },
+          eventID: eventId, 
+          id: eventId
         }
-      }))
+      })) as GraphQLResult<any>;
+      console.log("DateTime Response: ", dateTimeResponse);
+      
 
-      console.log("Response: ", response);
+      // Create Location
+      const locationResponse = await API.graphql(graphqlOperation(createLocation, {
+        input: {
+          country: formData.location.country,
+          province: formData.location.province,
+          city: formData.location.city,
+          postalCode: formData.location.postalCode,
+          address: formData.location.address,
+          longitude: formData.location.coordinates.longitude,
+          latitude: formData.location.coordinates.latitude,
+          userName: user.username,
+          eventID: eventId,
+          id: eventId
+        }
+      })) as GraphQLResult<any>;
+      console.log("Location Response: ", locationResponse);
+
+
+      // Create Description
+      const descriptionResponse = await API.graphql(graphqlOperation(createDescription, {
+        input: {
+          aboutEvent: formData.description.aboutEvent,
+          schedule: formData.description.schedule,
+          userName: user.username,
+          eventID: eventId,
+          id: eventId
+        }
+      })) as GraphQLResult<any>;
+      console.log("Description Response: ", descriptionResponse);
+
+
+      // Create Contact
+      const contactResponse = await API.graphql(graphqlOperation(createContact, {
+        input: {
+          phone: formData.contact.phone,
+          email: formData.contact.email,
+          website: formData.contact.website,
+          ig: formData.contact.ig,
+          twitter: formData.contact.twitter,
+          snapchat: formData.contact.snapchat,
+          tiktok: formData.contact.tiktok,
+          youtube: formData.contact.youtube,
+          userName: user.username,
+          eventID: eventId,
+          id: eventId
+        }
+      })) as GraphQLResult<any>;
+      console.log("Contact Response: ", contactResponse);
+
+
+      // Create SpecialAccommodation
+      const specialAccommodationResponse = await API.graphql(graphqlOperation(createSpecialAccommodation, {
+        input: {
+          wheelchairAccessibility: formData.specialAccommodation.wheelchairAccessibility,
+          signLanguageInterpretation: formData.specialAccommodation.signLanguageInterpretation,
+          closedCaptioning: formData.specialAccommodation.closedCaptioning,
+          assistiveListeningSystems: formData.specialAccommodation.assistiveListeningSystems,
+          brailleMaterials: formData.specialAccommodation.brailleMaterials,
+          flexibleCommunicationOptions: formData.specialAccommodation.flexibleCommunicationOptions,
+          accessibleSeating: formData.specialAccommodation.accessibleSeating,
+          serviceAnimalAccommodation: formData.specialAccommodation.serviceAnimalAccommodation,
+          sensoryAccommodations: formData.specialAccommodation.sensoryAccommodations,
+          userName: user.username,
+          eventID: eventId,
+          id: eventId
+        }
+      })) as GraphQLResult<any>;
+      console.log("SpecialAccommodation Response: ", specialAccommodationResponse);
 
     } catch (e) { 
-      console.log(e);
+      console.log("Error: ", JSON.stringify(e));
     }
 
 
   };
 
+
+  // Search for Location
   const handleSearch = async (data:any, details:any) => {
     setCountry(details?.address_components?.find((component: { types: string | string[]; }) => component.types.includes('country'))?.long_name || '');
     setProvince(details?.address_components?.find((component: { types: string | string[]; }) => component.types.includes('administrative_area_level_1'))?.long_name || '');
@@ -266,6 +341,78 @@ const ListEvent = () => {
     setLongitude(String(details?.geometry.location.lng) || "");
     setLatitude(String(details?.geometry?.location?.lat) || "");
   };
+
+  // Image Uploader
+  const handleChoosePhoto = async () => { 
+    console.log("Photo 1:", image1)
+    console.log("Photo 2:", image2)
+    console.log("Photo 3:", image3)
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      //allowsEditing: true,
+      allowsMultipleSelection: true,
+      selectionLimit: 3,
+      aspect: [5, 3],
+      quality: 1,
+    });
+
+    // console.log(result.assets, result.canceled);
+
+    if (!result.canceled) {
+
+      if (!image1 && !image2 && !image3) { 
+        setImage1(result.assets[0].uri);
+
+        if (result.assets[1]) {
+          setImage2(result.assets[1].uri);
+        }
+        if (result.assets[2]) {
+        setImage3(result.assets[2].uri);
+        }
+      } else if (!image2 && !image3) {
+        setImage2(result.assets[0].uri);
+
+        if (result.assets[1]) {
+          setImage3(result.assets[1].uri);
+        }
+      } else {
+        setImage3(result.assets[0].uri);
+      }
+
+    } else {
+      setImage1(null);
+      setImage2(null);
+      setImage3(null);
+    }
+  }
+  const deletePhoto1 = async () => { 
+    if (image2 && image3) { 
+      setImage1(image2);
+      setImage2(image3);
+      setImage3(null);
+    } else if(image2){
+       setImage1(image2);
+      setImage2(null);
+    }else {
+      setImage1(null);
+    }
+  }
+
+  const deletePhoto2 = async () => { 
+    if (image3) {
+      setImage2(image3);
+      setImage3(null);
+    } else {
+      setImage2(null);
+    }
+  }
+
+  const deletePhoto3 = async () => { 
+    setImage3(null);
+  }
+
+
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -317,7 +464,7 @@ const ListEvent = () => {
       
             <TextInput
               style={styles.input}
-              placeholder="Organization*"
+              placeholder="Organization"
               value={organization}
               onChangeText={text => setOrganization(text)}
             />
@@ -332,7 +479,7 @@ const ListEvent = () => {
             <TextInput
               style={styles.input}
               placeholder="Age Limit"
-              value={ageLimit}
+              value={String(ageLimit)}
               onChangeText={text => setAgeLimit(text)}
             />  
           
@@ -469,9 +616,83 @@ const ListEvent = () => {
               <Button title="Continue" onPress={eventDescriptionSubmit} color='#265999'/>
             </View>
           </View>
-          
-          
         }
+
+        {/* Image */}
+        {imageComponent &&
+          <View style={styles.bottomView}>
+            <Text style={styles.sectionTitle}>Images</Text>
+            {
+                  (!image1) &&
+              <View>
+                  <View style={styles.inputDescriptionImages}>
+                    <Text >Choose up to three captivating images that best showcase your event venue or highlight the anticipated features. These visuals will give your potential attendees a glimpse of what to expect and can significantly enhance their interest.</Text>
+                  </View>
+                  <TouchableOpacity onPress={handleChoosePhoto} style={styles.photosUploadButtonImg1}>
+                    <MaterialIcons name="add-circle" size={24} color="#98AFC7" />
+                  </TouchableOpacity>
+                  </View>
+                }
+            <ScrollView horizontal style={styles.imageContainer}>
+              <View style={styles.imageView}>
+                {image1 &&
+                  <View>
+                    <Image source={{ uri: image1 }} style={styles.photo} />
+                    <TouchableOpacity onPress={deletePhoto1} style={styles.deleteImage}>
+                      <Text style={{ color: "black", paddingRight: 5 }}>Delete image</Text>
+                      <AntDesign name="delete" size={18} color="black" />
+                    </TouchableOpacity>
+                  </View>  
+                }
+                {image2 &&
+                  <View>
+                    <Image source={{ uri: image2 }} style={styles.photo} />
+                    <TouchableOpacity onPress={deletePhoto2} style={styles.deleteImage}>
+                      <Text style={{ color: "black", paddingRight: 5 }}>Delete image</Text>
+                      <AntDesign name="delete" size={18} color="black" />
+                    </TouchableOpacity>
+                  </View>  
+                }
+                {image3 &&
+                  <View>
+                    <Image source={{ uri: image3 }} style={styles.photo} />
+                    <TouchableOpacity onPress={deletePhoto3} style={styles.deleteImage}>
+                      <Text style={{ color: "black", paddingRight: 5 }}>Delete image</Text>
+                      <AntDesign name="delete" size={18} color="black" />
+                    </TouchableOpacity>
+                  </View>  
+                }
+                {
+                  (image1 && (!image2 || !image3)) &&
+                  <View>
+                    <View style={styles.photosUploadBorder}>
+                      <TouchableOpacity onPress={handleChoosePhoto} style={styles.photosUploadButton}>
+                        <MaterialIcons name="add-circle" size={24} color="#98AFC7" />
+                      </TouchableOpacity>
+                      </View>
+                    <Text style={{paddingVertical: 10, alignSelf: "center"}}>*Upload up to 3 images</Text>
+                      
+                  </View>
+                }
+                
+
+              </View>
+            </ScrollView>
+
+            
+            <View style={styles.submitButton}>
+              <Button title="Submit" onPress={imageSubmit} color='#265999'/>
+            </View>
+          </View>
+        }
+
+
+
+        
+
+
+
+
 
         {/* Contact */}
         {contactComponent &&
@@ -606,8 +827,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 15,
     marginBottom: "2%",
-  
     marginHorizontal: 40,
+    textAlign:'left',
+  },
+  inputDescriptionImages: {
+    fontSize: 14,
+    marginTop: 15,
+    marginBottom: "2%",
+    marginHorizontal: 20,
     textAlign:'left',
   },
   input: {
@@ -669,7 +896,11 @@ const styles = StyleSheet.create({
     // alignSelf: 'center',
   },
   eventDescriptionContainer: {
-    marginBottom: 120,
+    marginBottom: 100,
+  },
+  imageContainer: {
+    marginHorizontal: 20,
+    marginBottom: 100,
   },
   contentContainer: {
     flexGrow: 1,
@@ -706,10 +937,7 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     position: "absolute",
-    // top: 520,
     bottom: 30,
-    //flexDirection: 'row',
-    //justifyContent:"center",
     alignSelf: "center",
 
   },
@@ -717,6 +945,51 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: "blue",
   },
+  imageView: {
+    display: 'flex',
+    flexDirection: 'row',
+    // alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 15,
+  },
+  photo: {
+    width: 300,
+    height: 200,
+  },
+  photosUploadButton: {
+    backgroundColor: 'white',
+    color: 'white',
+    borderRadius: 0,
+    alignSelf: "center",
+    justifyContent: "center",  
+  },
+  photosUploadButtonImg1: {
+    backgroundColor: 'white',
+    color: 'white',
+    borderRadius: 0,
+    alignSelf: "center",
+    justifyContent: "center", 
+    marginTop: 50,
+
+    
+  },
+  photosUploadBorder: {
+    backgroundColor: 'white',
+    width: 300,
+    height: 200,
+    borderWidth: 2,
+    borderColor: '#98AFC7', 
+    justifyContent: "center",
+  },
+  deleteImage: {
+    flexDirection: "row",
+    // backgroundColor: '#265999',
+    color: 'white',
+    paddingTop: 10,
+    paddingBottom: 20,
+    paddingHorizontal: 5,
+
+  }
 });
 
 export default ListEvent;
