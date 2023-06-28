@@ -146,6 +146,89 @@ const ListEvent = () => {
   // };
 
 
+  
+  // Search for Location
+  const handleSearch = async (data:any, details:any) => {
+    setCountry(details?.address_components?.find((component: { types: string | string[]; }) => component.types.includes('country'))?.long_name || '');
+    setProvince(details?.address_components?.find((component: { types: string | string[]; }) => component.types.includes('administrative_area_level_1'))?.long_name || '');
+    setCity(details?.address_components?.find((component: { types: string | string[]; }) => component.types.includes('locality'))?.long_name || '');
+    setPostalCode(details?.address_components?.find((component: { types: string | string[]; }) => component.types.includes('postal_code'))?.long_name || '');
+    setAddress(details?.formatted_address || '');
+    setLongitude(String(details?.geometry.location.lng) || "");
+    setLatitude(String(details?.geometry?.location?.lat) || "");
+  };
+
+
+  // Image Uploader
+  const handleChoosePhoto = async () => { 
+    console.log("Photo 1:", image1)
+    console.log("Photo 2:", image2)
+    console.log("Photo 3:", image3)
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      //allowsEditing: true,
+      allowsMultipleSelection: true,
+      selectionLimit: 3,
+      aspect: [5, 3],
+      quality: 1,
+    });
+
+    // console.log(result.assets, result.canceled);
+
+    if (!result.canceled) {
+
+      if (!image1 && !image2 && !image3) { 
+        setImage1(result.assets[0].uri);
+
+        if (result.assets[1]) {
+          setImage2(result.assets[1].uri);
+        }
+        if (result.assets[2]) {
+        setImage3(result.assets[2].uri);
+        }
+      } else if (!image2 && !image3) {
+        setImage2(result.assets[0].uri);
+
+        if (result.assets[1]) {
+          setImage3(result.assets[1].uri);
+        }
+      } else {
+        setImage3(result.assets[0].uri);
+      }
+
+    } 
+    
+  }
+  const deletePhoto1 = async () => { 
+    if (image2 && image3) { 
+      setImage1(image2);
+      setImage2(image3);
+      setImage3(null);
+    } else if(image2){
+       setImage1(image2);
+      setImage2(null);
+    }else {
+      setImage1(null);
+    }
+  }
+
+  const deletePhoto2 = async () => { 
+    if (image3) {
+      setImage2(image3);
+      setImage3(null);
+    } else {
+      setImage2(null);
+    }
+  }
+
+  const deletePhoto3 = async () => { 
+    setImage3(null);
+  }
+
+
+
+
+
   // Final submit Button
   const handleSubmit = async () => {
     // Validation and submission logic
@@ -162,6 +245,9 @@ const ListEvent = () => {
       smallDescription,
       ageLimit,
       ticketInfo,
+      image1,
+      image2,
+      image3,
       dateTime: {
         date,
         startTime,
@@ -205,6 +291,8 @@ const ListEvent = () => {
       },
     };
 
+    let images = [formData.image1, formData.image2, formData.image3]
+
 
     try {
       const user = await Auth.currentAuthenticatedUser(); 
@@ -214,6 +302,20 @@ const ListEvent = () => {
       // console.log("User ID: ", user.attributes.sub);
       console.log("Username: ", user.username);
       console.log(formData);
+
+      for (let image of images) {
+        if (image) {
+          const photoResponse = await fetch(image);
+
+          const blob = await photoResponse.blob();
+
+          await Storage.put(image, blob, {
+            contentType: 'image/jpeg',
+          });
+        }
+      }
+
+      
 
       // Create Event
       const eventResponse = await API.graphql(
@@ -230,6 +332,9 @@ const ListEvent = () => {
               smallDescription: formData.smallDescription,
               ageLimit: ageLimitNumber,
               ticketInfo: formData.ticketInfo,
+              image1: formData.image1 ? formData.image1 : "",
+              image2: formData.image2 ? formData.image2 : "",
+              image3: formData.image3 ? formData.image3 : "",
             },
             authMode: "AMAZON_COGNITO_USER_POOLS"
           }
@@ -330,86 +435,6 @@ const ListEvent = () => {
 
   };
 
-
-  // Search for Location
-  const handleSearch = async (data:any, details:any) => {
-    setCountry(details?.address_components?.find((component: { types: string | string[]; }) => component.types.includes('country'))?.long_name || '');
-    setProvince(details?.address_components?.find((component: { types: string | string[]; }) => component.types.includes('administrative_area_level_1'))?.long_name || '');
-    setCity(details?.address_components?.find((component: { types: string | string[]; }) => component.types.includes('locality'))?.long_name || '');
-    setPostalCode(details?.address_components?.find((component: { types: string | string[]; }) => component.types.includes('postal_code'))?.long_name || '');
-    setAddress(details?.formatted_address || '');
-    setLongitude(String(details?.geometry.location.lng) || "");
-    setLatitude(String(details?.geometry?.location?.lat) || "");
-  };
-
-  // Image Uploader
-  const handleChoosePhoto = async () => { 
-    console.log("Photo 1:", image1)
-    console.log("Photo 2:", image2)
-    console.log("Photo 3:", image3)
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      //allowsEditing: true,
-      allowsMultipleSelection: true,
-      selectionLimit: 3,
-      aspect: [5, 3],
-      quality: 1,
-    });
-
-    // console.log(result.assets, result.canceled);
-
-    if (!result.canceled) {
-
-      if (!image1 && !image2 && !image3) { 
-        setImage1(result.assets[0].uri);
-
-        if (result.assets[1]) {
-          setImage2(result.assets[1].uri);
-        }
-        if (result.assets[2]) {
-        setImage3(result.assets[2].uri);
-        }
-      } else if (!image2 && !image3) {
-        setImage2(result.assets[0].uri);
-
-        if (result.assets[1]) {
-          setImage3(result.assets[1].uri);
-        }
-      } else {
-        setImage3(result.assets[0].uri);
-      }
-
-    } else {
-      setImage1(null);
-      setImage2(null);
-      setImage3(null);
-    }
-  }
-  const deletePhoto1 = async () => { 
-    if (image2 && image3) { 
-      setImage1(image2);
-      setImage2(image3);
-      setImage3(null);
-    } else if(image2){
-       setImage1(image2);
-      setImage2(null);
-    }else {
-      setImage1(null);
-    }
-  }
-
-  const deletePhoto2 = async () => { 
-    if (image3) {
-      setImage2(image3);
-      setImage3(null);
-    } else {
-      setImage2(null);
-    }
-  }
-
-  const deletePhoto3 = async () => { 
-    setImage3(null);
-  }
 
 
 
@@ -623,16 +648,17 @@ const ListEvent = () => {
           <View style={styles.bottomView}>
             <Text style={styles.sectionTitle}>Images</Text>
             {
-                  (!image1) &&
+              (!image1) &&
               <View>
-                  <View style={styles.inputDescriptionImages}>
-                    <Text >Choose up to three captivating images that best showcase your event venue or highlight the anticipated features. These visuals will give your potential attendees a glimpse of what to expect and can significantly enhance their interest.</Text>
-                  </View>
-                  <TouchableOpacity onPress={handleChoosePhoto} style={styles.photosUploadButtonImg1}>
-                    <MaterialIcons name="add-circle" size={24} color="#98AFC7" />
-                  </TouchableOpacity>
-                  </View>
-                }
+                <View style={styles.inputDescriptionImages}>
+                  <Text >Choose up to three captivating images that best showcase your event venue or highlight the anticipated features. These visuals will give your potential attendees a glimpse of what to expect and can significantly enhance their interest.</Text>
+                </View>
+                <TouchableOpacity onPress={handleChoosePhoto} style={styles.photosUploadButtonImg1}>
+                  <MaterialIcons name="add-circle" size={24} color="#98AFC7" />
+                </TouchableOpacity>
+              </View>
+            }
+
             <ScrollView horizontal style={styles.imageContainer}>
               <View style={styles.imageView}>
                 {image1 &&
@@ -670,7 +696,7 @@ const ListEvent = () => {
                         <MaterialIcons name="add-circle" size={24} color="#98AFC7" />
                       </TouchableOpacity>
                       </View>
-                    <Text style={{paddingVertical: 10, alignSelf: "center"}}>*Upload up to 3 images</Text>
+                    <Text style={{ alignSelf: "center", paddingTop: 10}}>*Upload up to 3 images</Text>
                       
                   </View>
                 }
@@ -901,6 +927,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     marginHorizontal: 20,
     marginBottom: 100,
+    // alignContent: 'center',
   },
   contentContainer: {
     flexGrow: 1,
@@ -950,7 +977,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 15,
+    // paddingBottom: 15,
   },
   photo: {
     width: 300,
@@ -961,7 +988,7 @@ const styles = StyleSheet.create({
     color: 'white',
     borderRadius: 0,
     alignSelf: "center",
-    justifyContent: "center",  
+    justifyContent: "center", 
   },
   photosUploadButtonImg1: {
     backgroundColor: 'white',
@@ -980,6 +1007,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#98AFC7', 
     justifyContent: "center",
+ 
+
   },
   deleteImage: {
     flexDirection: "row",
